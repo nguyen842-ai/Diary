@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhật Ký Của Tôi</title>
+    <!-- Tải font chữ Lora (có chân, sang trọng) và Inter (không chân, hiện đại) từ Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS: Tùy chỉnh giao diện */
+        :root {
+            --bg-color: #f9f9f7; /* Màu nền trắng ngà giống trang giấy */
+            --text-color: #333333;
+            --light-text: #888888;
+            --border-color: #e5e5e5;
+            --accent-color: #5a5a5a;
+        }
+
+        body {
+            font-family: 'Lora', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-weight: 400;
+            font-style: italic;
+            font-size: 28px;
+            color: var(--text-color);
+        }
+
+        /* Khu vực viết nhật ký */
+        .editor-section {
+            background: #ffffff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 150px;
+            border: none;
+            resize: none;
+            font-family: 'Lora', serif;
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--text-color);
+            outline: none;
+            background: transparent;
+        }
+
+        textarea::placeholder {
+            color: #bbbbbb;
+            font-style: italic;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+
+        button {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 24px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #333;
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        /* Khu vực hiển thị nhật ký cũ */
+        .entries-section h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--light-text);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .entry {
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .entry-date {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: var(--light-text);
+            margin-bottom: 10px;
+        }
+
+        .entry-content {
+            font-size: 16px;
+            white-space: pre-wrap; /* Giữ nguyên khoảng trắng và xuống dòng */
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: none;
+            color: #d9534f;
+            padding: 0;
+            font-size: 13px;
+            opacity: 0; /* Ẩn đi, chỉ hiện khi di chuột vào */
+        }
+
+        .entry:hover .delete-btn {
+            opacity: 1;
+        }
+
+        .delete-btn:hover {
+            background: none;
+            text-decoration: underline;
+        }
+
+        /* Toast thông báo */
+        #toast {
+            visibility: hidden;
+            min-width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 4px;
+            padding: 12px;
+            position: fixed;
+            z-index: 1;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        #loading {
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            color: var(--light-text);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Nhật ký của tôi</h1>
+        </header>
+
+        <main>
+            <!-- Phần viết bài -->
+            <div class="editor-section">
+                <textarea id="diaryInput" placeholder="Hôm nay bạn cảm thấy thế nào? Hãy viết ra đây..."></textarea>
+                <div class="actions">
+                    <button id="saveBtn">Lưu lại</button>
+                </div>
+            </div>
+
+            <!-- Phần hiển thị bài viết -->
+            <div class="entries-section">
+                <h2>Những ngày đã qua</h2>
+                <div id="loading">Đang tải nhật ký...</div>
+                <div id="entriesList"></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Thông báo góc dưới màn hình -->
+    <div id="toast">Thông báo</div>
+
+    <!-- MÃ JAVASCRIPT & FIREBASE -->
+    <script type="module">
+        // 1. Nhập các thư viện Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        // 2. Cấu hình Firebase của bạn
+        const firebaseConfig = {
+            apiKey: "AIzaSyBGmLt1ka6mEVFcAlKU0-q6or66jTsuep4",
+            authDomain: "uyen-fdf7d.firebaseapp.com",
+            projectId: "uyen-fdf7d",
+            storageBucket: "uyen-fdf7d.firebasestorage.app",
+            messagingSenderId: "539808857702",
+            appId: "1:539808857702:web:bf074ecdde987bfcdc37a7",
+            measurementId: "G-L755R050CT"
+        };
+
+        // 3. Khởi tạo Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const diaryCollection = collection(db, "diaries");
+
+        // Các thành phần giao diện
+        const diaryInput = document.getElementById('diaryInput');
+        const saveBtn = document.getElementById('saveBtn');
+        const entriesList = document.getElementById('entriesList');
+        const toast = document.getElementById('toast');
+        const loading = document.getElementById('loading');
+
+        // Hàm hiển thị thông báo
+        function showToast(message) {
+            toast.textContent = message;
+            toast.className = "show";
+            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+
+        // Hàm định dạng ngày tháng hiển thị
+        function formatDate(dateString) {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            const date = new Date(dateString);
+            return date.toLocaleDateString('vi-VN', options);
+        }
+
+        // Hàm TẢI danh sách nhật ký từ Firebase
+        async function loadEntries() {
+            try {
+                // Lấy dữ liệu, sắp xếp theo thời gian tạo từ mới nhất xuống cũ nhất
+                const q = query(diaryCollection, orderBy("createdAt", "desc"));
+                const querySnapshot = await getDocs(q);
+                
+                entriesList.innerHTML = ''; // Xóa rỗng danh sách cũ
+                loading.style.display = 'none';
+
+                if(querySnapshot.empty) {
+                    entriesList.innerHTML = '<p style="color:#888; font-style:italic;">Chưa có trang nhật ký nào. Hãy viết dòng đầu tiên nhé!</p>';
+                    return;
+                }
+
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    const entryDiv = document.createElement('div');
+                    entryDiv.className = 'entry';
+                    
+                    // Xử lý XSS nhẹ (Bảo mật)
+                    const contentP = document.createElement('div');
+                    contentP.className = 'entry-content';
+                    contentP.textContent = data.content;
+
+                    entryDiv.innerHTML = `
+                        <div class="entry-date">${formatDate(data.createdAt)}</div>
+                        <button class="delete-btn" data-id="${docSnap.id}">Xóa</button>
+                    `;
+                    entryDiv.appendChild(contentP);
+                    entriesList.appendChild(entryDiv);
+                });
+
+                // Gắn sự kiện Xóa cho các nút xóa vừa tạo
+                document.querySelectorAll('.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        if(confirm("Bạn có chắc chắn muốn xóa bài viết này không?")) {
+                            const docId = e.target.getAttribute('data-id');
+                            await deleteDoc(doc(db, "diaries", docId));
+                            showToast("Đã xóa bài viết!");
+                            loadEntries(); // Tải lại danh sách
+                        }
+                    });
+                });
+
+            } catch (error) {
+                console.error("Lỗi khi tải nhật ký: ", error);
+                loading.textContent = "Không thể tải dữ liệu. Hãy chắc chắn bạn đã tạo Firestore Database ở chế độ Test mode.";
+            }
+        }
+
+        // Hàm LƯU nhật ký lên Firebase
+        saveBtn.addEventListener('click', async () => {
+            const content = diaryInput.value.trim();
+            if (content === "") {
+                showToast("Bạn chưa viết gì cả!");
+                return;
+            }
+
+            saveBtn.disabled = true;
+            saveBtn.textContent = "Đang lưu...";
+
+            try {
+                // Tạo một bản ghi mới trên Firebase
+                await addDoc(diaryCollection, {
+                    content: content,
+                    createdAt: new Date().toISOString() // Lưu thời gian hiện tại
+                });
+                
+                diaryInput.value = ""; // Xóa trắng khung nhập
+                showToast("Đã lưu nhật ký thành công!");
+                loadEntries(); // Tải lại danh sách để hiện bài vừa đăng
+
+            } catch (error) {
+                console.error("Lỗi khi lưu: ", error);
+                showToast("Lỗi: Không thể lưu nhật ký.");
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = "Lưu lại";
+            }
+        });
+
+        // Tự động điều chỉnh chiều cao của khung nhập chữ
+        diaryInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+
+        // Gọi hàm tải nhật ký khi vừa mở trang web
+        loadEntries();
+
+    </script>
+</body>
+</html>
