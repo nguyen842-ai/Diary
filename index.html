@@ -3,40 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Diary</title>
+    <title>My diary</title>
+    <!-- Thêm font Dancing Script cho tiêu đề nghệ thuật -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800&family=Lora:ital,wght@0,400;0,500;1,400&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
+        /* CSS Biến toàn cục (Hỗ trợ Sáng/Tối) */
         :root {
-            --bg-color: #f9f9f7;
             --text-color: #333333;
             --light-text: #888888;
             --border-color: #e5e5e5;
             --accent-color: #5a5a5a;
-            --panel-bg: #ffffff;
-            --hover-bg: #f0f0f0;
+            /* Đặt panel-bg hơi trong suốt để lộ ảnh nền 1.jpg */
+            --panel-bg: rgba(255, 255, 255, 0.85); 
+            --hover-bg: rgba(240, 240, 240, 0.9);
             --editor-fs: 17px;
-            --grid-line-color: #dcdccf;
         }
 
         /* Chế độ tối (Dark Mode) */
         body.dark-mode {
-            --bg-color: #1a1a1a;
             --text-color: #f0f0f0;
             --light-text: #aaaaaa;
             --border-color: #444444;
             --accent-color: #888888;
-            --panel-bg: #2d2d2d;
-            --hover-bg: #3d3d3d;
-            --grid-line-color: #444444;
+            /* Panel tối cũng hơi trong suốt */
+            --panel-bg: rgba(45, 45, 45, 0.85);
+            --hover-bg: rgba(61, 61, 61, 0.9);
         }
 
-        body { font-family: 'Lora', serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; transition: background-color 0.3s, color 0.3s; height: 100vh; overflow: hidden; }
+        body { 
+            font-family: 'Lora', serif; 
+            color: var(--text-color); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.6; 
+            transition: color 0.3s; 
+            height: 100vh; 
+            overflow: hidden; 
+            /* SỬ DỤNG FILE 1.JPG LÀM HÌNH NỀN */
+            background: url('1.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
 
         /* --- MÀN HÌNH ĐĂNG NHẬP / AUTH SCREEN --- */
-        #auth-screen { position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 9999; background-color: var(--bg-color); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
-        .auth-container { width: 100%; max-width: 350px; background: var(--panel-bg); padding: 40px 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); text-align: center; border: 1px solid var(--border-color); }
+        #auth-screen { position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; background: inherit; }
+        /* Lớp phủ mờ cho màn hình đăng nhập để dễ đọc hơn */
+        #auth-screen::before { content: ""; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.3); z-index: -1; }
+        
+        .auth-container { width: 100%; max-width: 350px; background: var(--panel-bg); padding: 40px 30px; border-radius: 12px; box-shadow: 0 4px 30px rgba(0,0,0,0.1); text-align: center; border: 1px solid var(--border-color); backdrop-filter: blur(5px); }
         .auth-container h1 { font-family: 'Dancing Script', cursive; font-size: 42px; margin-top: 0; margin-bottom: 30px; color: var(--text-color); }
-        .auth-input { width: 100%; padding: 14px 15px; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 8px; background: var(--bg-color); color: var(--text-color); font-family: 'Inter', sans-serif; font-size: 15px; box-sizing: border-box; outline: none; }
+        .auth-input { width: 100%; padding: 14px 15px; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 8px; background: rgba(255,255,255,0.5); color: var(--text-color); font-family: 'Inter', sans-serif; font-size: 15px; box-sizing: border-box; outline: none; }
+        body.dark-mode .auth-input { background: rgba(0,0,0,0.3); }
         .auth-input:focus { border-color: var(--accent-color); }
         .auth-btn { width: 100%; padding: 14px; background: var(--accent-color); color: white; border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-weight: 500; font-size: 16px; cursor: pointer; margin-bottom: 15px; }
         .auth-switch { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--light-text); cursor: pointer; text-decoration: underline; background: none; border: none; margin-bottom: 10px;}
@@ -46,7 +62,7 @@
 
         /* --- BẢNG ĐIỀU KHIỂN (SIDEBAR) --- */
         #main-app { display: none; width: 100%; height: 100%; }
-        .sidebar { width: 300px; background-color: var(--panel-bg); border-right: 1px solid var(--border-color); height: 100vh; overflow-y: auto; position: fixed; left: -300px; top: 0; transition: left 0.3s ease; z-index: 1000; box-shadow: 2px 0 10px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
+        .sidebar { width: 300px; background-color: var(--panel-bg); border-right: 1px solid var(--border-color); height: 100vh; overflow-y: auto; position: fixed; left: -300px; top: 0; transition: left 0.3s ease; z-index: 1000; box-shadow: 2px 0 10px rgba(0,0,0,0.05); display: flex; flex-direction: column; backdrop-filter: blur(5px); }
         .sidebar.open { left: 0; }
         .sidebar-header { padding: 20px; font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 500; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
         .close-btn { background: none; border: none; font-size: 24px; color: var(--text-color); cursor: pointer; }
@@ -66,68 +82,66 @@
         .history-title { font-weight: 500; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .history-date { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--light-text); }
 
-        /* --- PHẦN NỘI DUNG CHÍNH --- */
+        /* --- PHẦN NỘI DUNG CHÍNH (TRÀN MÀN HÌNH) --- */
         .main-content { flex-grow: 1; height: 100vh; overflow-y: auto; padding: 0 20px; transition: margin-left 0.3s ease; }
-        .menu-btn { position: fixed; top: 20px; left: 20px; background-color: var(--panel-bg); border: 1px solid var(--border-color); color: var(--text-color); padding: 8px 15px; border-radius: 20px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; z-index: 900; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        
-        /* Container tràn toàn màn hình với lề thích hợp */
-        .container { width: 100%; max-width: 1400px; padding: 0 5%; margin: 60px auto 50px auto; box-sizing: border-box; }
+        .menu-btn { position: fixed; top: 20px; left: 20px; background-color: var(--panel-bg); border: 1px solid var(--border-color); color: var(--text-color); padding: 8px 15px; border-radius: 20px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; z-index: 900; box-shadow: 0 2px 5px rgba(0,0,0,0.1); backdrop-filter: blur(5px); }
+        /* Tăng kích thước container để rộng rãi như quyển sổ thật */
+        .container { width: 100%; max-width: 1000px; margin: 50px auto 80px auto; }
+
+        .diary-title {
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 50px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: var(--text-color);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
 
         /* --- TRÌNH SOẠN THẢO (EDITOR) --- */
-        .editor-section { background: transparent; padding: 10px 0; margin-bottom: 50px; }
-        .input-title { width: 100%; border: none; border-bottom: 1px dashed var(--border-color); font-family: 'Lora', serif; font-size: 26px; font-weight: 500; padding-bottom: 10px; margin-bottom: 15px; background: transparent; color: var(--text-color); outline: none; }
+        .editor-section { background: var(--panel-bg); padding: 30px 40px; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); margin-bottom: 50px; backdrop-filter: blur(8px); }
+        .input-title { width: 100%; border: none; border-bottom: 1px solid var(--border-color); font-family: 'Lora', serif; font-size: 24px; font-weight: 700; padding-bottom: 15px; margin-bottom: 15px; background: transparent; color: var(--text-color); outline: none; }
         
-        /* Toolbar căn phải */
-        .toolbar { display: flex; gap: 10px; margin-bottom: 20px; padding-bottom: 15px; flex-wrap: wrap; justify-content: flex-end; position: sticky; top: 0; background: var(--bg-color); z-index: 10; padding-top: 10px; border-bottom: 1px solid var(--border-color); }
-        .toolbar button, .toolbar input[type="color"] { background: var(--panel-bg); border: 1px solid var(--border-color); color: var(--text-color); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        /* CĂN PHẢI THANH CÔNG CỤ */
+        .toolbar { display: flex; gap: 10px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--border-color); flex-wrap: wrap; justify-content: flex-end; }
+        
+        .toolbar button, .toolbar input[type="color"] { background: var(--bg-color); border: 1px solid var(--border-color); color: var(--text-color); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 13px; transition: 0.2s;}
+        body.dark-mode .toolbar button { background: #333; }
         .toolbar button:hover { background: var(--hover-bg); }
         
-        /* Sổ tay - Notebook Gridlines */
-        .editor-box { 
-            width: 100%; 
-            min-height: 500px; 
-            outline: none; 
-            font-size: var(--editor-fs); 
-            color: var(--text-color); 
-            /* Gridline CSS */
-            line-height: 36px; /* Chiều cao mỗi dòng để text nằm khớp */
-            background-image: repeating-linear-gradient(transparent, transparent 35px, var(--grid-line-color) 35px, var(--grid-line-color) 36px);
-            background-attachment: local;
-            padding-top: 6px; /* Căn chỉnh padding để text vừa chạm lên đường kẻ */
-            padding-bottom: 36px;
-        }
-        
-        .editor-box p, .editor-box div { margin: 0; padding: 0; }
+        /* Box nhập liệu tràn màn hình */
+        .editor-box { width: 100%; min-height: 45vh; outline: none; font-size: var(--editor-fs); line-height: 1.8; color: var(--text-color); padding-top: 10px; }
         .editor-box[placeholder]:empty:before { content: attr(placeholder); color: #bbbbbb; font-style: italic; pointer-events: none; display: block; }
         
-        .actions { display: flex; justify-content: flex-end; margin-top: 30px; }
-        .btn-save { font-family: 'Inter', sans-serif; background-color: var(--accent-color); color: white; border: none; padding: 10px 30px; border-radius: 30px; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .btn-save:hover { opacity: 0.9; }
-
+        .actions { display: flex; justify-content: flex-end; margin-top: 20px; }
+        .btn-save { font-family: 'Inter', sans-serif; background-color: var(--accent-color); color: white; border: none; padding: 10px 30px; border-radius: 25px; font-size: 15px; cursor: pointer; transition: background 0.3s; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .btn-save:hover { opacity: 0.9; transform: translateY(-1px); }
+        
         /* --- BÀI VIẾT CŨ --- */
-        .entries-section { margin-top: 50px; }
-        .entries-section h2 { font-family: 'Inter', sans-serif; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--light-text); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 30px; }
-        .entry { margin-bottom: 50px; position: relative; scroll-margin-top: 80px; background: var(--panel-bg); padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid var(--border-color); }
-        .entry-title { font-size: 24px; font-weight: 500; margin-bottom: 5px; color: var(--text-color); font-family: 'Lora', serif;}
-        .entry-date { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--light-text); margin-bottom: 20px; }
-        .entry-content { font-size: 16px; line-height: 1.8; }
-        .delete-btn { position: absolute; top: 20px; right: 20px; background: none; border: none; color: #d9534f; padding: 5px 10px; border-radius: 6px; font-size: 13px; font-family: 'Inter', sans-serif; cursor: pointer; opacity: 0; transition: opacity 0.2s, background 0.2s; }
+        .entries-section { background: var(--panel-bg); padding: 30px 40px; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); backdrop-filter: blur(8px); }
+        .entries-section h2 { font-family: 'Inter', sans-serif; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; color: var(--light-text); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 30px; }
+        .entry { margin-bottom: 40px; position: relative; scroll-margin-top: 80px; padding-bottom: 30px; border-bottom: 1px dashed var(--border-color); }
+        .entry:last-child { border-bottom: none; }
+        .entry-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; color: var(--text-color); }
+        .entry-date { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--light-text); margin-bottom: 15px; font-style: italic; }
+        .entry-content { font-size: var(--editor-fs); line-height: 1.8; }
+        .delete-btn { position: absolute; top: 0; right: 0; background: none; border: 1px solid #d9534f; border-radius: 4px; color: #d9534f; padding: 4px 10px; font-size: 12px; cursor: pointer; opacity: 0; transition: 0.2s; }
         .entry:hover .delete-btn { opacity: 1; }
-        .delete-btn:hover { background: #feebeb; }
+        .delete-btn:hover { background: #d9534f; color: white; }
 
         /* --- MODAL THÙNG RÁC --- */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 3000; display: none; justify-content: center; align-items: center; }
-        .modal-content { background: var(--panel-bg); width: 90%; max-width: 600px; border-radius: 12px; padding: 25px; max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.2); border: 1px solid var(--border-color); }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px;}
+        .modal-content { background: var(--panel-bg); width: 90%; max-width: 600px; border-radius: 12px; padding: 25px; max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.3); backdrop-filter: blur(10px); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 15px;}
         .modal-header h2 { margin: 0; font-family: 'Inter', sans-serif; font-size: 18px; color: var(--text-color); }
-        .trash-item { border: 1px dashed var(--border-color); padding: 15px; margin-bottom: 15px; border-radius: 8px; background: var(--bg-color);}
-        .trash-title { font-weight: bold; font-size: 16px; margin-bottom: 5px; color: var(--text-color); }
-        .trash-content-preview { font-size: 14px; color: var(--light-text); max-height: 60px; overflow: hidden; text-overflow: ellipsis; margin-bottom: 10px; }
-        .trash-actions { display: flex; gap: 10px; }
-        .btn-restore { background: #5cb85c; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 500;}
-        .btn-hard-delete { background: #d9534f; color: white; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 500;}
+        .trash-item { border: 1px dashed var(--border-color); padding: 15px; margin-bottom: 15px; border-radius: 8px; background: rgba(0,0,0,0.02);}
+        body.dark-mode .trash-item { background: rgba(255,255,255,0.02); }
+        .trash-title { font-weight: bold; font-size: 16px; margin-bottom: 5px; }
+        .trash-actions { display: flex; gap: 10px; margin-top: 10px;}
+        .btn-restore { background: #5cb85c; color: white; border: none; padding: 6px 15px; border-radius: 4px; cursor: pointer; font-size: 13px; font-family: 'Inter', sans-serif;}
+        .btn-hard-delete { background: #d9534f; color: white; border: none; padding: 6px 15px; border-radius: 4px; cursor: pointer; font-size: 13px; font-family: 'Inter', sans-serif;}
 
-        #toast { visibility: hidden; background-color: #333; color: #fff; text-align: center; border-radius: 30px; padding: 12px 24px; position: fixed; z-index: 4000; bottom: 30px; left: 50%; transform: translateX(-50%); font-family: 'Inter', sans-serif; font-size: 14px; opacity: 0; transition: opacity 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        #toast { visibility: hidden; background-color: #333; color: #fff; text-align: center; border-radius: 30px; padding: 12px 25px; position: fixed; z-index: 4000; bottom: 30px; left: 50%; transform: translateX(-50%); font-family: 'Inter', sans-serif; font-size: 14px; opacity: 0; transition: opacity 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         #toast.show { visibility: visible; opacity: 1; }
     </style>
 </head>
@@ -154,7 +168,7 @@
 
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                Tùy chỉnh & Lịch sử
+                Cài đặt & Lịch sử
                 <button class="close-btn" id="closeMenuBtn">&times;</button>
             </div>
             
@@ -163,9 +177,8 @@
                     Tài khoản: <strong id="user-email-display" style="color: var(--text-color);">...</strong>
                 </div>
                 <div class="setting-item"><label>Chế độ Tối (Dark Mode)</label><input type="checkbox" id="darkModeToggle"></div>
-                <div class="setting-item"><label>Kích cỡ chữ</label><input type="range" id="fontSizeSlider" min="14" max="24" value="17"></div>
+                <div class="setting-item"><label>Kích cỡ chữ</label><input type="range" id="fontSizeSlider" min="14" max="26" value="17"></div>
                 
-                <!-- NÚT MỞ THÙNG RÁC -->
                 <button class="btn-trash-menu" onclick="openTrashModal()">🗑️ Thùng rác của tôi</button>
                 <button class="btn-logout" onclick="handleLogout()">Đăng Xuất</button>
             </div>
@@ -178,28 +191,33 @@
 
         <div class="main-content">
             <div class="container">
-                <header style="text-align: center; margin-bottom: 30px;">
-                    <h1 style="font-family: 'Dancing Script', cursive; font-size: 56px; font-weight: 700; margin: 0;">My diary</h1>
-                </header>
+                <header><h1 class="diary-title">My diary</h1></header>
                 <main>
                     <div class="editor-section">
-                        <input type="text" id="entryTitle" class="input-title" placeholder="Tiêu đề nhật ký (Không bắt buộc)">
+                        <input type="text" id="entryTitle" class="input-title" placeholder="Chủ đề hôm nay của bạn là gì?">
+                        
                         <div class="toolbar">
+                            <!-- NÚT TAB THÊM VÀO -->
+                            <button type="button" onclick="insertTab()" title="Thêm khoảng lùi đầu dòng">Tab ⇥</button>
                             <button type="button" onclick="formatText('bold')" title="In đậm"><b>B</b></button>
                             <button type="button" onclick="formatText('italic')" title="In nghiêng"><i>I</i></button>
-                            <div style="display:flex; align-items:center; gap:5px; border:1px solid var(--border-color); padding: 0 5px; border-radius: 6px; background: var(--panel-bg);">
-                                <span style="font-size: 13px; padding-left: 5px;">Màu chữ:</span><input type="color" id="textColorPicker" onchange="changeColor(this.value)" style="border:none; padding:0; width: 25px; height: 28px; background:transparent; box-shadow:none;">
-                            </div>
                             <button type="button" onclick="formatText('justifyLeft')" title="Căn trái">Trái</button>
                             <button type="button" onclick="formatText('justifyCenter')" title="Căn giữa">Giữa</button>
                             <button type="button" onclick="formatText('justifyRight')" title="Căn phải">Phải</button>
-                            <!-- Nút Thụt lề mới -->
-                            <button type="button" onclick="formatText('indent')" title="Thụt lề">Tab ⇥</button>
+                            <div style="display:flex; align-items:center; gap:5px; border:1px solid var(--border-color); padding: 0 8px; border-radius: 6px; background: rgba(128,128,128,0.1);">
+                                <span style="font-size: 13px;">Màu chữ:</span><input type="color" id="textColorPicker" onchange="changeColor(this.value)" style="border:none; padding:0; width: 22px; height: 26px; background:transparent;">
+                            </div>
                         </div>
+                        
                         <div id="diaryEditor" class="editor-box" contenteditable="true" placeholder="Hôm nay bạn cảm thấy thế nào? Hãy viết ra đây..."></div>
-                        <div class="actions"><button id="saveBtn" class="btn-save">Lưu nhật ký</button></div>
+                        
+                        <div class="actions"><button id="saveBtn" class="btn-save">Lưu lại trang này</button></div>
                     </div>
-                    <div class="entries-section"><h2>Những ngày đã qua</h2><div id="entriesList"></div></div>
+                    
+                    <div class="entries-section">
+                        <h2>Những ngày đã qua</h2>
+                        <div id="entriesList"></div>
+                    </div>
                 </main>
             </div>
         </div>
@@ -310,16 +328,23 @@
 
         window.formatText = function(cmd) { document.execCommand(cmd, false, null); document.getElementById('diaryEditor').focus(); };
         window.changeColor = function(color) { document.execCommand('foreColor', false, color); document.getElementById('diaryEditor').focus(); };
-        function showToast(message) { const toast = document.getElementById('toast'); toast.textContent = message; toast.className = "show"; setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000); }
-        function formatDate(dateString) { return new Date(dateString).toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }); }
+        
+        /* HÀM XỬ LÝ TAB (LÙI ĐẦU DÒNG) */
+        window.insertTab = function() {
+            document.execCommand('insertHTML', false, '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+            document.getElementById('diaryEditor').focus();
+        };
 
-        // Bắt phím Tab trong editor để sử dụng indent thay vì chuyển focus
+        // Bắt sự kiện ấn phím Tab trên bàn phím trong lúc viết
         document.getElementById('diaryEditor').addEventListener('keydown', function(e) {
             if (e.key === 'Tab') {
                 e.preventDefault();
-                formatText('indent');
+                insertTab();
             }
         });
+
+        function showToast(message) { const toast = document.getElementById('toast'); toast.textContent = message; toast.className = "show"; setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000); }
+        function formatDate(dateString) { return new Date(dateString).toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }); }
 
         /* --- TẢI DỮ LIỆU & PHÂN LOẠI (TRASH / ACTIVE) --- */
         async function loadEntries() {
@@ -350,7 +375,7 @@
                     const entryDiv = document.createElement('div');
                     entryDiv.className = 'entry';
                     entryDiv.id = `entry-${docId}`;
-                    entryDiv.innerHTML = `<button class="delete-btn" onclick="moveToTrash('${docId}')">Xóa</button>
+                    entryDiv.innerHTML = `<button class="delete-btn" onclick="moveToTrash('${docId}')">Xóa bài</button>
                                           <div class="entry-title">${displayTitle}</div><div class="entry-date">${dateStr}</div>
                                           <div class="entry-content">${data.content}</div>`;
                     entriesList.appendChild(entryDiv);
@@ -362,7 +387,7 @@
                 });
 
                 if(!hasActive) {
-                    entriesList.innerHTML = '<p style="color:var(--light-text); font-style:italic;">Chưa có bài viết nào.</p>';
+                    entriesList.innerHTML = '<p style="color:var(--light-text); font-style:italic;">Chưa có trang nhật ký nào.</p>';
                     sidebarHistoryList.innerHTML = '<li style="font-size: 13px; color: gray;">Trống</li>';
                 }
             } catch (error) { console.error(error); }
@@ -383,9 +408,9 @@
                     createdAt: new Date().toISOString()
                 });
                 document.getElementById('entryTitle').value = ""; document.getElementById('diaryEditor').innerHTML = "";
-                showToast("Lưu thành công!"); loadEntries();
+                showToast("Đã lưu trang nhật ký mới!"); loadEntries();
             } catch (error) { showToast("Lỗi khi lưu!"); } 
-            finally { document.getElementById('saveBtn').disabled = false; document.getElementById('saveBtn').textContent = "Lưu nhật ký"; }
+            finally { document.getElementById('saveBtn').disabled = false; document.getElementById('saveBtn').textContent = "Lưu lại trang này"; }
         });
 
         /* --- CÁC HÀM XỬ LÝ THÙNG RÁC --- */
