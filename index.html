@@ -4,30 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My diary</title>
-    <!-- Thêm font Dancing Script cho tiêu đề nghệ thuật -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800&family=Lora:ital,wght@0,400;0,500;1,400&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <!-- Thêm font chữ viết tay Patrick Hand (hỗ trợ tiếng Việt) và Dancing Script -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Dancing+Script:wght@700&family=Patrick+Hand&display=swap" rel="stylesheet">
     <style>
         /* CSS Biến toàn cục (Hỗ trợ Sáng/Tối) */
         :root {
-            --text-color: #333333;
-            --light-text: #888888;
-            --border-color: #e5e5e5;
+            --text-color: #222222;
+            --light-text: #666666;
+            --border-color: rgba(150, 150, 150, 0.4);
             --accent-color: #5a5a5a;
-            /* Đặt panel-bg hơi trong suốt để lộ ảnh nền 1.jpg */
-            --panel-bg: rgba(255, 255, 255, 0.85); 
-            --hover-bg: rgba(240, 240, 240, 0.9);
-            --editor-fs: 17px;
+            --panel-bg: rgba(255, 255, 255, 0.85); /* Chỉ dùng cho sidebar và popup */
+            --hover-bg: rgba(200, 200, 200, 0.3);
+            --editor-fs: 22px; /* Chữ viết tay cần to hơn một chút */
+            --handwriting-font: 'Patrick Hand', cursive;
         }
 
         /* Chế độ tối (Dark Mode) */
         body.dark-mode {
-            --text-color: #f0f0f0;
-            --light-text: #aaaaaa;
-            --border-color: #444444;
-            --accent-color: #888888;
-            /* Panel tối cũng hơi trong suốt */
-            --panel-bg: rgba(45, 45, 45, 0.85);
-            --hover-bg: rgba(61, 61, 61, 0.9);
+            --text-color: #f5f5f5;
+            --light-text: #cccccc;
+            --border-color: rgba(200, 200, 200, 0.3);
+            --panel-bg: rgba(30, 30, 30, 0.9);
+            --hover-bg: rgba(80, 80, 80, 0.4);
         }
 
         body { 
@@ -44,11 +42,21 @@
             background-size: cover;
         }
 
+        /* Lớp phủ cho chế độ tối (30% opacity) */
+        .bg-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0);
+            z-index: -1;
+            transition: background 0.3s ease;
+            pointer-events: none;
+        }
+        body.dark-mode .bg-overlay {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
         /* --- MÀN HÌNH ĐĂNG NHẬP / AUTH SCREEN --- */
-        #auth-screen { position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; background: inherit; }
-        /* Lớp phủ mờ cho màn hình đăng nhập để dễ đọc hơn */
-        #auth-screen::before { content: ""; position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.3); z-index: -1; }
-        
+        #auth-screen { position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
         .auth-container { width: 100%; max-width: 350px; background: var(--panel-bg); padding: 40px 30px; border-radius: 12px; box-shadow: 0 4px 30px rgba(0,0,0,0.1); text-align: center; border: 1px solid var(--border-color); backdrop-filter: blur(5px); }
         .auth-container h1 { font-family: 'Dancing Script', cursive; font-size: 42px; margin-top: 0; margin-bottom: 30px; color: var(--text-color); }
         .auth-input { width: 100%; padding: 14px 15px; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 8px; background: rgba(255,255,255,0.5); color: var(--text-color); font-family: 'Inter', sans-serif; font-size: 15px; box-sizing: border-box; outline: none; }
@@ -62,7 +70,7 @@
 
         /* --- BẢNG ĐIỀU KHIỂN (SIDEBAR) --- */
         #main-app { display: none; width: 100%; height: 100%; }
-        .sidebar { width: 300px; background-color: var(--panel-bg); border-right: 1px solid var(--border-color); height: 100vh; overflow-y: auto; position: fixed; left: -300px; top: 0; transition: left 0.3s ease; z-index: 1000; box-shadow: 2px 0 10px rgba(0,0,0,0.05); display: flex; flex-direction: column; backdrop-filter: blur(5px); }
+        .sidebar { width: 300px; background-color: var(--panel-bg); border-right: 1px solid var(--border-color); height: 100vh; overflow-y: auto; position: fixed; left: -300px; top: 0; transition: left 0.3s ease; z-index: 1000; box-shadow: 2px 0 10px rgba(0,0,0,0.05); display: flex; flex-direction: column; backdrop-filter: blur(10px); }
         .sidebar.open { left: 0; }
         .sidebar-header { padding: 20px; font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 500; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
         .close-btn { background: none; border: none; font-size: 24px; color: var(--text-color); cursor: pointer; }
@@ -79,53 +87,82 @@
         .history-item { margin-bottom: 15px; }
         .history-item a { text-decoration: none; color: var(--text-color); display: block; padding: 8px; border-radius: 6px; transition: background 0.2s; }
         .history-item a:hover { background-color: var(--hover-bg); }
-        .history-title { font-weight: 500; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .history-date { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--light-text); }
+        .history-title { font-family: var(--handwriting-font); font-size: 18px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .history-date { font-family: 'Inter', sans-serif; font-size: 11px; color: var(--light-text); }
 
         /* --- PHẦN NỘI DUNG CHÍNH (TRÀN MÀN HÌNH) --- */
         .main-content { flex-grow: 1; height: 100vh; overflow-y: auto; padding: 0 20px; transition: margin-left 0.3s ease; }
         .menu-btn { position: fixed; top: 20px; left: 20px; background-color: var(--panel-bg); border: 1px solid var(--border-color); color: var(--text-color); padding: 8px 15px; border-radius: 20px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 14px; z-index: 900; box-shadow: 0 2px 5px rgba(0,0,0,0.1); backdrop-filter: blur(5px); }
-        /* Tăng kích thước container để rộng rãi như quyển sổ thật */
-        .container { width: 100%; max-width: 1000px; margin: 50px auto 80px auto; }
+        .container { width: 100%; max-width: 900px; margin: 50px auto 80px auto; }
 
         .diary-title {
             text-align: center;
             font-family: 'Dancing Script', cursive;
             font-size: 50px;
             font-weight: 700;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             color: var(--text-color);
             text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
         }
 
-        /* --- TRÌNH SOẠN THẢO (EDITOR) --- */
-        .editor-section { background: var(--panel-bg); padding: 30px 40px; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); margin-bottom: 50px; backdrop-filter: blur(8px); }
-        .input-title { width: 100%; border: none; border-bottom: 1px solid var(--border-color); font-family: 'Lora', serif; font-size: 24px; font-weight: 700; padding-bottom: 15px; margin-bottom: 15px; background: transparent; color: var(--text-color); outline: none; }
+        /* --- TRÌNH SOẠN THẢO (VIẾT TRỰC TIẾP LÊN NỀN) --- */
+        .editor-section { background: transparent; padding: 20px 0; margin-bottom: 50px; }
         
-        /* CĂN PHẢI THANH CÔNG CỤ */
-        .toolbar { display: flex; gap: 10px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--border-color); flex-wrap: wrap; justify-content: flex-end; }
+        .input-title { 
+            width: 100%; 
+            border: none; 
+            border-bottom: 1px dashed var(--border-color); 
+            font-family: var(--handwriting-font); 
+            font-size: 32px; 
+            padding-bottom: 10px; 
+            margin-bottom: 15px; 
+            background: transparent; 
+            color: var(--text-color); 
+            outline: none; 
+        }
+        .input-title::placeholder { color: var(--light-text); opacity: 0.7; }
         
-        .toolbar button, .toolbar input[type="color"] { background: var(--bg-color); border: 1px solid var(--border-color); color: var(--text-color); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 13px; transition: 0.2s;}
-        body.dark-mode .toolbar button { background: #333; }
+        .toolbar { display: flex; gap: 8px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); flex-wrap: wrap; justify-content: flex-end; }
+        
+        .toolbar button, .toolbar input[type="color"] { background: rgba(255,255,255,0.4); border: 1px solid var(--border-color); color: var(--text-color); padding: 5px 12px; border-radius: 6px; cursor: pointer; font-family: 'Inter', sans-serif; font-size: 13px; transition: 0.2s; backdrop-filter: blur(3px);}
+        body.dark-mode .toolbar button, body.dark-mode .toolbar input[type="color"] { background: rgba(0,0,0,0.3); color: #fff;}
         .toolbar button:hover { background: var(--hover-bg); }
         
-        /* Box nhập liệu tràn màn hình */
-        .editor-box { width: 100%; min-height: 45vh; outline: none; font-size: var(--editor-fs); line-height: 1.8; color: var(--text-color); padding-top: 10px; }
-        .editor-box[placeholder]:empty:before { content: attr(placeholder); color: #bbbbbb; font-style: italic; pointer-events: none; display: block; }
+        /* Box nhập liệu chữ viết tay */
+        .editor-box { 
+            width: 100%; 
+            min-height: 40vh; 
+            outline: none; 
+            font-family: var(--handwriting-font);
+            font-size: var(--editor-fs); 
+            line-height: 1.8; 
+            letter-spacing: 1px;
+            color: var(--text-color); 
+            padding-top: 10px; 
+        }
+        .editor-box[placeholder]:empty:before { content: attr(placeholder); color: var(--light-text); opacity: 0.7; pointer-events: none; display: block; }
         
         .actions { display: flex; justify-content: flex-end; margin-top: 20px; }
-        .btn-save { font-family: 'Inter', sans-serif; background-color: var(--accent-color); color: white; border: none; padding: 10px 30px; border-radius: 25px; font-size: 15px; cursor: pointer; transition: background 0.3s; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .btn-save:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-save { font-family: 'Inter', sans-serif; background-color: var(--text-color); color: var(--panel-bg); border: none; padding: 8px 25px; border-radius: 25px; font-size: 14px; cursor: pointer; transition: 0.3s; font-weight: bold; opacity: 0.8;}
+        .btn-save:hover { opacity: 1; transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         
         /* --- BÀI VIẾT CŨ --- */
-        .entries-section { background: var(--panel-bg); padding: 30px 40px; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); backdrop-filter: blur(8px); }
-        .entries-section h2 { font-family: 'Inter', sans-serif; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; color: var(--light-text); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 30px; }
+        .entries-section { background: transparent; padding: 20px 0; }
+        .entries-section h2 { font-family: 'Inter', sans-serif; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: var(--light-text); border-bottom: 1px dashed var(--border-color); padding-bottom: 10px; margin-bottom: 30px; text-align: center;}
+        
         .entry { margin-bottom: 40px; position: relative; scroll-margin-top: 80px; padding-bottom: 30px; border-bottom: 1px dashed var(--border-color); }
         .entry:last-child { border-bottom: none; }
-        .entry-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; color: var(--text-color); }
-        .entry-date { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--light-text); margin-bottom: 15px; font-style: italic; }
-        .entry-content { font-size: var(--editor-fs); line-height: 1.8; }
-        .delete-btn { position: absolute; top: 0; right: 0; background: none; border: 1px solid #d9534f; border-radius: 4px; color: #d9534f; padding: 4px 10px; font-size: 12px; cursor: pointer; opacity: 0; transition: 0.2s; }
+        .entry-title { font-family: var(--handwriting-font); font-size: 30px; margin-bottom: 5px; color: var(--text-color); }
+        .entry-date { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--light-text); margin-bottom: 15px; }
+        
+        .entry-content { 
+            font-family: var(--handwriting-font);
+            font-size: var(--editor-fs); 
+            line-height: 1.8;
+            letter-spacing: 1px; 
+        }
+        
+        .delete-btn { position: absolute; top: 0; right: 0; background: none; border: 1px solid #d9534f; border-radius: 4px; color: #d9534f; padding: 3px 8px; font-size: 11px; cursor: pointer; opacity: 0; transition: 0.2s; font-family: 'Inter', sans-serif;}
         .entry:hover .delete-btn { opacity: 1; }
         .delete-btn:hover { background: #d9534f; color: white; }
 
@@ -136,7 +173,7 @@
         .modal-header h2 { margin: 0; font-family: 'Inter', sans-serif; font-size: 18px; color: var(--text-color); }
         .trash-item { border: 1px dashed var(--border-color); padding: 15px; margin-bottom: 15px; border-radius: 8px; background: rgba(0,0,0,0.02);}
         body.dark-mode .trash-item { background: rgba(255,255,255,0.02); }
-        .trash-title { font-weight: bold; font-size: 16px; margin-bottom: 5px; }
+        .trash-title { font-family: var(--handwriting-font); font-size: 22px; margin-bottom: 5px; color: var(--text-color);}
         .trash-actions { display: flex; gap: 10px; margin-top: 10px;}
         .btn-restore { background: #5cb85c; color: white; border: none; padding: 6px 15px; border-radius: 4px; cursor: pointer; font-size: 13px; font-family: 'Inter', sans-serif;}
         .btn-hard-delete { background: #d9534f; color: white; border: none; padding: 6px 15px; border-radius: 4px; cursor: pointer; font-size: 13px; font-family: 'Inter', sans-serif;}
@@ -146,6 +183,9 @@
     </style>
 </head>
 <body>
+
+    <!-- Lớp phủ tối màu cho chế độ Dark Mode -->
+    <div class="bg-overlay"></div>
 
     <!-- MÀN HÌNH ĐĂNG NHẬP -->
     <div id="auth-screen">
@@ -176,8 +216,8 @@
                 <div style="font-family: 'Inter', sans-serif; font-size: 13px; margin-bottom: 15px; color: var(--light-text);">
                     Tài khoản: <strong id="user-email-display" style="color: var(--text-color);">...</strong>
                 </div>
-                <div class="setting-item"><label>Chế độ Tối (Dark Mode)</label><input type="checkbox" id="darkModeToggle"></div>
-                <div class="setting-item"><label>Kích cỡ chữ</label><input type="range" id="fontSizeSlider" min="14" max="26" value="17"></div>
+                <div class="setting-item"><label>Chế độ Tối</label><input type="checkbox" id="darkModeToggle"></div>
+                <div class="setting-item"><label>Cỡ chữ</label><input type="range" id="fontSizeSlider" min="18" max="36" value="22"></div>
                 
                 <button class="btn-trash-menu" onclick="openTrashModal()">🗑️ Thùng rác của tôi</button>
                 <button class="btn-logout" onclick="handleLogout()">Đăng Xuất</button>
@@ -194,10 +234,9 @@
                 <header><h1 class="diary-title">My diary</h1></header>
                 <main>
                     <div class="editor-section">
-                        <input type="text" id="entryTitle" class="input-title" placeholder="Chủ đề hôm nay của bạn là gì?">
+                        <input type="text" id="entryTitle" class="input-title" placeholder="Chủ đề hôm nay...">
                         
                         <div class="toolbar">
-                            <!-- NÚT TAB THÊM VÀO -->
                             <button type="button" onclick="insertTab()" title="Thêm khoảng lùi đầu dòng">Tab ⇥</button>
                             <button type="button" onclick="formatText('bold')" title="In đậm"><b>B</b></button>
                             <button type="button" onclick="formatText('italic')" title="In nghiêng"><i>I</i></button>
@@ -205,13 +244,13 @@
                             <button type="button" onclick="formatText('justifyCenter')" title="Căn giữa">Giữa</button>
                             <button type="button" onclick="formatText('justifyRight')" title="Căn phải">Phải</button>
                             <div style="display:flex; align-items:center; gap:5px; border:1px solid var(--border-color); padding: 0 8px; border-radius: 6px; background: rgba(128,128,128,0.1);">
-                                <span style="font-size: 13px;">Màu chữ:</span><input type="color" id="textColorPicker" onchange="changeColor(this.value)" style="border:none; padding:0; width: 22px; height: 26px; background:transparent;">
+                                <span style="font-size: 13px;">Màu:</span><input type="color" id="textColorPicker" onchange="changeColor(this.value)" style="border:none; padding:0; width: 22px; height: 26px; background:transparent;">
                             </div>
                         </div>
                         
-                        <div id="diaryEditor" class="editor-box" contenteditable="true" placeholder="Hôm nay bạn cảm thấy thế nào? Hãy viết ra đây..."></div>
+                        <div id="diaryEditor" class="editor-box" contenteditable="true" placeholder="Trang giấy đang chờ bạn viết..."></div>
                         
-                        <div class="actions"><button id="saveBtn" class="btn-save">Lưu lại trang này</button></div>
+                        <div class="actions"><button id="saveBtn" class="btn-save">Lưu trang nhật ký</button></div>
                     </div>
                     
                     <div class="entries-section">
@@ -230,9 +269,7 @@
                 <h2>🗑️ Thùng rác</h2>
                 <button class="close-btn" onclick="document.getElementById('trashModal').style.display='none'">&times;</button>
             </div>
-            <div id="trashListContainer">
-                <!-- Danh sách bài bị xóa sẽ hiện ở đây -->
-            </div>
+            <div id="trashListContainer"></div>
         </div>
     </div>
 
@@ -295,11 +332,11 @@
 
         window.handleForgotPassword = async function() {
             const email = emailInput.value.trim();
-            if(!email) { showAuthMsg("Vui lòng nhập Email vào ô trống ở trên để nhận link đặt lại mật khẩu!", "error"); return; }
+            if(!email) { showAuthMsg("Vui lòng nhập Email để nhận link đặt lại mật khẩu!", "error"); return; }
             try {
                 await sendPasswordResetEmail(auth, email);
-                showAuthMsg("Đã gửi email khôi phục mật khẩu! Vui lòng kiểm tra hộp thư của bạn.", "success");
-            } catch (error) { showAuthMsg("Lỗi: Không tìm thấy tài khoản với email này.", "error"); }
+                showAuthMsg("Đã gửi email khôi phục mật khẩu!", "success");
+            } catch (error) { showAuthMsg("Lỗi: Không tìm thấy tài khoản.", "error"); }
         }
 
         window.handleLogout = async function() { if(confirm("Bạn có chắc muốn đăng xuất?")) await signOut(auth); };
@@ -329,13 +366,11 @@
         window.formatText = function(cmd) { document.execCommand(cmd, false, null); document.getElementById('diaryEditor').focus(); };
         window.changeColor = function(color) { document.execCommand('foreColor', false, color); document.getElementById('diaryEditor').focus(); };
         
-        /* HÀM XỬ LÝ TAB (LÙI ĐẦU DÒNG) */
         window.insertTab = function() {
             document.execCommand('insertHTML', false, '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
             document.getElementById('diaryEditor').focus();
         };
 
-        // Bắt sự kiện ấn phím Tab trên bàn phím trong lúc viết
         document.getElementById('diaryEditor').addEventListener('keydown', function(e) {
             if (e.key === 'Tab') {
                 e.preventDefault();
@@ -346,7 +381,7 @@
         function showToast(message) { const toast = document.getElementById('toast'); toast.textContent = message; toast.className = "show"; setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000); }
         function formatDate(dateString) { return new Date(dateString).toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }); }
 
-        /* --- TẢI DỮ LIỆU & PHÂN LOẠI (TRASH / ACTIVE) --- */
+        /* --- TẢI DỮ LIỆU --- */
         async function loadEntries() {
             if (!currentUser) return;
             try {
@@ -375,7 +410,7 @@
                     const entryDiv = document.createElement('div');
                     entryDiv.className = 'entry';
                     entryDiv.id = `entry-${docId}`;
-                    entryDiv.innerHTML = `<button class="delete-btn" onclick="moveToTrash('${docId}')">Xóa bài</button>
+                    entryDiv.innerHTML = `<button class="delete-btn" onclick="moveToTrash('${docId}')">Xóa</button>
                                           <div class="entry-title">${displayTitle}</div><div class="entry-date">${dateStr}</div>
                                           <div class="entry-content">${data.content}</div>`;
                     entriesList.appendChild(entryDiv);
@@ -387,7 +422,7 @@
                 });
 
                 if(!hasActive) {
-                    entriesList.innerHTML = '<p style="color:var(--light-text); font-style:italic;">Chưa có trang nhật ký nào.</p>';
+                    entriesList.innerHTML = '<p style="color:var(--light-text); font-style:italic; text-align:center;">Bạn chưa có trang nhật ký nào.</p>';
                     sidebarHistoryList.innerHTML = '<li style="font-size: 13px; color: gray;">Trống</li>';
                 }
             } catch (error) { console.error(error); }
@@ -410,12 +445,12 @@
                 document.getElementById('entryTitle').value = ""; document.getElementById('diaryEditor').innerHTML = "";
                 showToast("Đã lưu trang nhật ký mới!"); loadEntries();
             } catch (error) { showToast("Lỗi khi lưu!"); } 
-            finally { document.getElementById('saveBtn').disabled = false; document.getElementById('saveBtn').textContent = "Lưu lại trang này"; }
+            finally { document.getElementById('saveBtn').disabled = false; document.getElementById('saveBtn').textContent = "Lưu trang nhật ký"; }
         });
 
         /* --- CÁC HÀM XỬ LÝ THÙNG RÁC --- */
         window.moveToTrash = async function(docId) {
-            if(confirm("Bạn có chắc chắn muốn chuyển bài viết này vào Thùng rác không?")) {
+            if(confirm("Chuyển bài viết này vào Thùng rác?")) {
                 await updateDoc(doc(db, "diaries", docId), { status: 'trash' });
                 showToast("Đã chuyển vào thùng rác!");
                 loadEntries(); 
@@ -427,14 +462,14 @@
             let savedPin = localStorage.getItem(pinKey);
 
             if (!savedPin) {
-                let newPin = prompt("💡 Bạn chưa có mã PIN bảo vệ Thùng rác.\n\nHãy tạo một mã PIN mới (Ví dụ: 1234) để ngăn người khác đọc bài viết đã xóa của bạn:");
+                let newPin = prompt("💡 Tạo mã PIN (Ví dụ: 1234) bảo vệ Thùng rác:");
                 if (!newPin) return; 
                 localStorage.setItem(pinKey, newPin);
                 savedPin = newPin;
-                alert("Đã lưu mã PIN! Hãy ghi nhớ nhé.");
+                alert("Đã lưu mã PIN!");
             }
 
-            let enteredPin = prompt("🔒 Vui lòng nhập mã PIN để mở Thùng rác:");
+            let enteredPin = prompt("🔒 Nhập mã PIN để mở Thùng rác:");
             if (enteredPin === null) return; 
             if (enteredPin !== savedPin) { alert("Sai mã PIN!"); return; }
 
@@ -475,7 +510,7 @@
         }
 
         window.hardDelete = async function(docId) {
-            if(confirm("CẢNH BÁO: Hành động này sẽ xóa vĩnh viễn bài viết khỏi hệ thống. Bạn không thể lấy lại được. Tiếp tục?")) {
+            if(confirm("CẢNH BÁO: Bài viết sẽ bị xóa vĩnh viễn khỏi hệ thống. Tiếp tục?")) {
                 await deleteDoc(doc(db, "diaries", docId));
                 showToast("Đã xóa vĩnh viễn!");
                 loadEntries(); 
