@@ -61,7 +61,28 @@
             transition: color 0.3s; 
             height: 100vh; 
             overflow: hidden; 
-            background: url('1.jpg') no-repeat center center fixed;
+            body { 
+            font-family: var(--handwriting-font); 
+            color: var(--text-color); 
+            margin: 0; 
+            padding: 0; 
+            line-height: 1.6; 
+            transition: color 0.3s; 
+            height: 100vh; 
+            overflow: hidden; 
+            
+            /* KHÔNG TẢI ẢNH MẶC ĐỊNH Ở ĐÂY NỮA */
+            background-color: #e5e5e5;
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            
+            /* Cờ khử răng cưa và tối ưu nét chữ */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
             background-size: cover;
             
             /* Cờ khử răng cưa và tối ưu nét chữ */
@@ -109,7 +130,7 @@
         .auth-forgot { color: #d9534f; margin-top: 5px;}
         .auth-msg { margin-top: 15px; font-family: var(--handwriting-font); font-size: 16px; font-weight: bold; display: none; }
         .auth-msg.error { color: #d9534f; } .auth-msg.success { color: #5cb85c; }
-        #auth-screen { position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
+        #auth-screen { position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 9999; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
 
         /* --- BUTTON CUBE --- */
         .btn {
@@ -378,9 +399,29 @@
         body[data-font="Borel"][data-btn-theme="type3"] .btn:hover .text { transform: translate(12px, 3px); }
         body[data-btn-theme="type3"] .btn:hover .bg { width: 300px; height: 300px; opacity: 1; }
         body[data-btn-theme="type3"] .btn:active { transform: scale(0.95); box-shadow: 0 0 0 4px var(--accent-color); }
+        /* --- ANIMATION FOLDER --- */
+        .fadeInUp {
+            -webkit-animation-name: fadeInUp;
+            animation-name: fadeInUp;
+            -webkit-animation-duration: 0.6s; /* Rút ngắn xuống 0.6s cho cảm giác nhanh nhẹn hơn */
+            animation-duration: 0.6s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+        }
+        @-webkit-keyframes fadeInUp {
+            0% { opacity: 0; -webkit-transform: translate3d(0, 50px, 0); transform: translate3d(0, 50px, 0); }
+            100% { opacity: 1; -webkit-transform: none; transform: none; }
+        }
+        @keyframes fadeInUp {
+            0% { opacity: 0; -webkit-transform: translate3d(0, 50px, 0); transform: translate3d(0, 50px, 0); }
+            100% { opacity: 1; -webkit-transform: none; transform: none; }
+        }
     </style>
 </head>
 <body>
+    <div id="startup-loader" style="position: fixed; inset: 0; background: var(--panel-bg); z-index: 100000; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s; font-family: 'Dancing Script', cursive; font-size: 45px; color: var(--text-color);">
+        chờ mình một lát...
+    </div>
 
     <div class="bg-overlay"></div>
 
@@ -762,8 +803,7 @@
 
         window.handleLogout = async function() { if(confirm("Bạn có chắc muốn đăng xuất?")) await signOut(auth); };
         function showAuthMsg(msg, type) { authMsg.innerText = msg; authMsg.className = "auth-msg " + type; authMsg.style.display = "block"; }
-
-        onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(auth, async (user) => {
             if (user) {
                 currentUser = user;
                 document.getElementById('auth-screen').style.display = 'none';
@@ -774,11 +814,21 @@
                     emailDisplay.innerText = user.email;
                 }
                 
+                // Tải dữ liệu và cài đặt nền
                 await loadCoreData();
             } else {
                 currentUser = null;
+                // Nếu chưa đăng nhập, tự động gán nền 1.jpg cho màn hình đăng nhập
+                document.body.style.backgroundImage = "url('1.jpg')";
                 document.getElementById('auth-screen').style.display = 'flex';
                 document.getElementById('main-app').style.display = 'none';
+            }
+            
+            // Tắt màn hình chờ mượt mà sau khi mọi thứ đã sẵn sàng
+            const loader = document.getElementById('startup-loader');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.style.display = 'none', 500); // Ẩn hoàn toàn sau 0.5s
             }
         });
 
@@ -1311,7 +1361,7 @@
                     tabFolders.forEach(f => {
                         const bgStyle = f.image ? `background-image: url('${f.image}');` : `background: var(--accent-color);`;
                         folderGridEl.innerHTML += `
-                            <div class="folder-box" onclick="openFolderView('${f.id}')">
+                            <div class="folder-box fadeInUp" onclick="openFolderView('${f.id}')">
                                 <div class="folder-img" style="${bgStyle}"></div>
                                 <div class="folder-name">${f.name}</div>
                             </div>
