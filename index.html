@@ -3,20 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My diary</title>
-        <!-- Đặt icon cho trình duyệt chung và Android -->
+    <title>My Notebook</title>
     <link rel="icon" type="image/jpeg" href="IMG_20260922222851899.jpeg">
-    
-    <!-- Đặt icon cho iOS (iPhone, iPad) -->
     <link rel="apple-touch-icon" href="IMG_20260922222851899.jpeg">
-    
-    <!-- Cấu hình để web hiển thị full màn hình như App thực thụ -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="My diary">
+    <meta name="apple-mobile-web-app-title" content="My Notebook">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <link href="https://fonts.googleapis.com/css2?family=Borel&family=Inter:wght@300;400;500;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Borel&family=Inter:wght@300;400;500;700;900&family=Lora:ital,wght@0,400;0,500;1,400&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
             --text-color: #222222;
@@ -55,93 +50,50 @@
             background: rgba(0, 0, 0, 0); z-index: -1; pointer-events: none;
             transition: background 0.3s ease;
         }
-        body.dark-mode .bg-overlay { background: rgba(0, 0, 0, 0.5); }
+        body.dark-mode .bg-overlay { background: rgba(0, 0, 0, 0.6); }
 
-        /* --- GIAO DIỆN FORM ĐĂNG NHẬP (BOX 3D) --- */
+        /* --- GIAO DIỆN FORM ĐĂNG NHẬP --- */
         .auth-container {
-            --input-focus: var(--accent-color);
-            --font-color: var(--text-color);
-            --font-color-sub: var(--light-text);
-            --bg-color: var(--panel-bg);
-            --main-color: var(--text-color);
-            
-            width: 100%; 
-            max-width: 350px; 
-            padding: 40px 30px; 
-            background-color: var(--bg-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 5px;
-            border: 2px solid var(--main-color);
-            box-shadow: 6px 6px var(--main-color);
+            --input-focus: var(--accent-color); --font-color: var(--text-color);
+            --font-color-sub: var(--light-text); --bg-color: var(--panel-bg); --main-color: var(--text-color);
+            width: 100%; max-width: 350px; padding: 40px 30px; 
+            background-color: var(--bg-color); display: flex; flex-direction: column;
+            align-items: center; justify-content: center; border-radius: 5px;
+            border: 2px solid var(--main-color); box-shadow: 6px 6px var(--main-color);
             transition: background-color 0.3s, color 0.3s;
         }
-
         .auth-container h1 { font-family: 'Dancing Script', cursive; font-size: 45px; margin-top: 0; margin-bottom: 25px; color: var(--font-color); }
-
         .input {
-            width: 100%;
-            height: 45px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            border: 2px solid var(--main-color);
-            background-color: transparent;
-            box-shadow: 4px 4px var(--main-color);
-            font-size: 18px; 
-            font-weight: 600;
-            color: var(--font-color);
-            padding: 14px 15px 0px 15px;
-            outline: none;
-            box-sizing: border-box;
-            font-family: var(--handwriting-font); 
+            width: 100%; height: 45px; margin-bottom: 20px; border-radius: 5px;
+            border: 2px solid var(--main-color); background-color: transparent;
+            box-shadow: 4px 4px var(--main-color); font-size: 18px; 
+            font-weight: 600; color: var(--font-color); padding: 14px 15px 0px 15px; outline: none; box-sizing: border-box; font-family: var(--handwriting-font); 
             transition: border-color 0.2s, background-color 0.3s;
         }
         body.dark-mode .input { background-color: rgba(0,0,0,0.2); }
         .input::placeholder { color: var(--font-color-sub); opacity: 0.8; }
         .input:focus { border: 2px solid var(--input-focus); }
-
         .button-confirm {
-            margin: 10px auto 20px auto;
-            width: 100%;
-            height: 45px;
-            border-radius: 5px;
-            border: 2px solid var(--main-color);
-            background-color: var(--bg-color);
-            box-shadow: 4px 4px var(--main-color);
-            font-size: 20px;
-            font-weight: 900;
-            color: var(--font-color);
-            cursor: pointer;
-            transition: 0.1s;
-            font-family: var(--handwriting-font);
-		padding-top: 5px;
+            margin: 10px auto 20px auto; width: 100%; height: 45px; border-radius: 5px;
+            border: 2px solid var(--main-color); background-color: var(--bg-color);
+            box-shadow: 4px 4px var(--main-color); font-size: 20px; font-weight: 900;
+            color: var(--font-color); cursor: pointer; transition: 0.1s; font-family: var(--handwriting-font); padding-top: 5px;
         }
         .button-confirm:active { box-shadow: 0px 0px var(--main-color); transform: translate(3px, 3px); }
-
         .auth-switch, .auth-forgot { font-family: var(--handwriting-font); font-size: 16px; color: var(--font-color-sub); cursor: pointer; text-decoration: underline; background: none; border: none; margin-bottom: 5px;}
         .auth-forgot { color: #d9534f; margin-top: 5px;}
         .auth-msg { margin-top: 15px; font-family: var(--handwriting-font); font-size: 16px; font-weight: bold; display: none; }
         .auth-msg.error { color: #d9534f; } .auth-msg.success { color: #5cb85c; }
         #auth-screen { position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
 
-        /* --- GIAO DIỆN BUTTON CUBE --- */
+        /* --- BUTTON CUBE --- */
         .btn {
-            display: block;
-            padding: 0.7em 1.2em;
-            background: transparent;
-            outline: none;
-            border: 0;
-            color: #d4af37;
-            letter-spacing: 0.1em;
-            font-family: var(--handwriting-font);
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 1;
-            position: relative;
+            display: block; padding: 0.7em 1.2em; background: transparent;
+            outline: none; border: 0; color: #d4af37; letter-spacing: 0.1em;
+            font-family: var(--handwriting-font); font-size: 18px; font-weight: bold;
+            cursor: pointer; z-index: 1; position: relative;
         }
+        .btn.inline { display: inline-block; }
         .cube { position: relative; transition: all 0.5s; }
         .cube .bg-top { position: absolute; height: 10px; background: inherit; bottom: 100%; left: 5px; right: -5px; transform: skew(-45deg, 0); margin: 0; transition: all 0.4s; }
         .cube .bg-top .bg-inner { bottom: 0; }
@@ -149,110 +101,100 @@
         .cube .bg-right { position: absolute; background: inherit; top: -5px; z-index: 0; bottom: 5px; width: 10px; left: 100%; transform: skew(0, -45deg); transition: all 0.4s; }
         .cube .bg-right .bg-inner { left: 0; }
         .cube .bg-inner { background: #28282d; position: absolute; left: 2px; right: 2px; top: 2px; bottom: 2px; }
-        .cube .text { 
-            position: relative; 
-            transition: all 0.4s; 
-            display: inline-block;
-            transform: translateY(3px);
-        }
-        
+        .cube .text { position: relative; transition: all 0.4s; display: inline-block; transform: translateY(3px); }
         .cube:hover .bg-inner { background: transparent; transition: all 0.4s; }
         .cube:hover .text { color: #28282d !important; transition: all 0.4s; }
         .cube:active { z-index: 9999; animation: bounce 0.1s linear; }
-        @keyframes bounce { 50% { transform: scale(0.95); } }
+        .cube.active-tab .bg-inner { background: transparent; }
+        .cube.active-tab .text { color: #28282d !important; }
 
-        /* Đảo Nút Menu sang phải, thu nhỏ và không đè scrollbar */
-        #openMenuBtn { 
-            position: fixed; 
-            top: 25px; 
-            right: 45px; 
-            z-index: 900; 
-            padding: 0.3em 0.7em; 
-        }
-        
+        #openMenuBtn { position: fixed; top: 25px; right: 45px; z-index: 900; padding: 0.3em 0.7em; }
         .btn-full { width: 100%; text-align: center; margin-top: 15px;}
-        .entry-actions { position: absolute; top: -10px; right: 10px; display: flex; gap: 12px; opacity: 0; transition: opacity 0.2s; }
-        .entry:hover .entry-actions { opacity: 1; }
-        .entry-actions .btn { padding: 0.4em 0.8em; font-size: 15px; }
+        
+        /* --- TABS BÊN DƯỚI TIÊU ĐỀ --- */
+        .tabs-container { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 10px; margin-bottom: 40px; }
 
-        /* --- NÚT TOOLBAR (CHẤM BI) SỬA LỆCH CHỮ --- */
+        /* --- NÚT TOOLBAR TRONG EDITOR --- */
         .btn-tool {
             --stone-50: #fafaf9; --stone-800: #292524; --yellow-400: #facc15;
             font-size: 1.1rem; cursor: pointer; position: relative; 
-            font-family: var(--handwriting-font);
-            font-weight: bold; line-height: 1; padding: 1px; border-radius: 9999px; border: none;
-            background-color: var(--stone-800); color: var(--stone-800);
-            box-shadow: 0.5px 0.5px 0 0 var(--stone-800), 1px 1px 0 0 var(--stone-800), 0 0 0 2px var(--stone-50);
-            transition: transform 150ms, box-shadow 150ms;
+            font-family: var(--handwriting-font); font-weight: bold; line-height: 1; padding: 1px; border-radius: 9999px; border: none;
+            background-color: var(--stone-800); color: var(--stone-800); box-shadow: 0.5px 0.5px 0 0 var(--stone-800), 1px 1px 0 0 var(--stone-800), 0 0 0 2px var(--stone-50); transition: transform 150ms, box-shadow 150ms;
         }
         .btn-tool:hover { transform: translate(1px, 1px); box-shadow: 0 0 0 2px var(--stone-50); }
         .btn-tool > div { position: relative; pointer-events: none; background-color: var(--yellow-400); border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 9999px; overflow: hidden; }
         .btn-tool > div::before { content: ""; position: absolute; inset: 0; opacity: 0.5; background-image: radial-gradient(rgb(255 255 255 / 80%) 20%, transparent 20%), radial-gradient(rgb(255 255 255 / 100%) 20%, transparent 20%); background-position: 0 0, 4px 4px; background-size: 8px 8px; mix-blend-mode: hard-light; animation: dots 0.5s infinite linear; }
-        
-        /* Cân chỉnh padding để chữ nằm gọn giữa button chấm bi */
-        .btn-tool > div > span { 
-            position: relative; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            padding: 0.8rem 1rem 0.35rem; 
-            filter: drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.25));
-		transform: translateY(4px);
-        }
+        .btn-tool > div > span { position: relative; display: flex; align-items: center; justify-content: center; padding: 0.8rem 1rem 0.35rem; filter: drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.25)); transform: translateY(4px); }
 
-        /* --- BẢNG ĐIỀU KHIỂN (SIDEBAR) ĐẢO SANG PHẢI --- */
+        /* --- SIDEBAR MENU --- */
         #main-app { display: none; width: 100%; height: 100%; }
         .sidebar { 
-            width: 320px; background-color: var(--panel-bg); height: 100vh; overflow-y: auto; 
-            position: fixed; right: -340px; top: 0; transition: right 0.3s ease; z-index: 1000; display: flex; flex-direction: column; 
+            width: 340px; background-color: var(--panel-bg); height: 100vh; overflow-y: auto; 
+            position: fixed; right: -360px; top: 0; transition: right 0.3s ease; z-index: 1000; display: flex; flex-direction: column; 
             border-left: 2px solid var(--text-color); box-shadow: -6px 0px 0px var(--text-color);
         }
         .sidebar.open { right: 0; }
-        .sidebar-header { padding: 20px; font-family: var(--handwriting-font); font-size: 24px; font-weight: bold; border-bottom: 2px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
-        .sidebar-box { padding: 20px; border-bottom: 2px solid var(--border-color); }
-        .setting-item { margin-bottom: 15px; font-family: var(--handwriting-font); font-size: 18px; display: flex; align-items: center; justify-content: space-between; font-weight: 600;}
+        .sidebar-header { padding: 15px 20px; font-family: var(--handwriting-font); font-size: 20px; font-weight: bold; border-bottom: 2px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .sidebar-box { padding: 15px 20px; border-bottom: 2px solid var(--border-color); }
+        .setting-item { margin-bottom: 12px; font-family: var(--handwriting-font); font-size: 15px; display: flex; align-items: center; justify-content: space-between; font-weight: 600;}
+        .setting-input { padding: 6px 10px; font-family: var(--handwriting-font); font-size: 14px; width: 100%; box-sizing: border-box; border: 2px solid var(--text-color); background: transparent; color: var(--text-color); margin-top: 5px; outline: none;}
+        .setting-input::placeholder { color: var(--light-text); }
+        .setting-input:focus { border-color: var(--accent-color); }
         
+        .menu-accordion { margin-top: 15px; border: 2px solid var(--text-color); border-radius: 5px; overflow: hidden; font-family: var(--handwriting-font); font-size: 15px;}
+        .menu-accordion summary { background: var(--hover-bg); padding: 10px; font-weight: bold; cursor: pointer; outline: none; list-style: none; display: flex; align-items: center; gap: 8px;}
+        .menu-accordion summary::-webkit-details-marker { display: none; }
+        .menu-accordion summary:active { background: var(--border-color); }
+        .menu-accordion .accordion-content { padding: 15px; background: rgba(0,0,0,0.03); border-top: 2px solid var(--text-color);}
+        body.dark-mode .menu-accordion .accordion-content { background: rgba(255,255,255,0.03); }
+        
+        .list-item-row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding: 6px; border-bottom: 1px dashed var(--border-color); font-size: 14px; background: var(--panel-bg); border-radius: 4px; border: 1px solid var(--border-color);}
+        .action-btns button { background: none; border: none; cursor: pointer; font-size: 14px; transition: transform 0.1s;}
+        .action-btns button:active { transform: scale(0.9); }
+
         .history-list { list-style: none; padding: 0; margin: 0; }
         .history-item { margin-bottom: 15px; }
         .history-item a { text-decoration: none; color: var(--text-color); display: block; padding: 8px; transition: background 0.2s; border-radius: 4px;}
         .history-item a:hover { background-color: var(--hover-bg); }
-        .history-title { font-family: var(--handwriting-font); font-size: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .history-date { font-family: var(--handwriting-font); font-size: 14px; color: var(--light-text); }
+        .history-title { font-family: var(--handwriting-font); font-size: 16px; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .history-date { font-family: var(--handwriting-font); font-size: 12px; color: var(--light-text); }
 
-        /* --- PHẦN NỘI DUNG CHÍNH --- */
+        /* --- NỘI DUNG CHÍNH --- */
         .main-content { flex-grow: 1; height: 100vh; overflow-y: auto; padding: 0 20px; }
         .container { width: 100%; max-width: 1000px; margin: 80px auto; }
+        .diary-title { text-align: center; font-family: 'Dancing Script', cursive; font-size: 90px; font-weight: 700; margin-bottom: 0px; color: var(--text-color); text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
         
-        .diary-title { text-align: center; font-family: 'Dancing Script', cursive; font-size: 90px; font-weight: 700; margin-bottom: 10px; color: var(--text-color); text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
-        .entries-section h2 { font-family: 'Dancing Script', cursive; font-size: 55px; border-bottom: 1px dashed var(--border-color); padding-bottom: 10px; text-align: center;}
+        /* HIỂN THỊ THƯ MỤC DẠNG GRID (100x100px) */
+        .folder-grid { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; margin-bottom: 40px; }
+        .folder-box { width: 100px; display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.2s;}
+        .folder-box:hover { transform: scale(1.05); }
+        .folder-img { 
+            width: 100px; height: 100px; border-radius: 12px; border: 2px solid var(--text-color); 
+            box-shadow: 4px 4px 0px var(--text-color); background-size: cover; background-position: center; 
+        }
+        .folder-name { font-family: var(--handwriting-font); font-size: 16px; font-weight: bold; margin-top: 10px; text-align: center; line-height: 1.2; word-break: break-word; color: var(--text-color);}
+
+        /* BẢNG BÀI VIẾT */
+        .entry-table { width: 100%; border-collapse: collapse; margin-top: 10px;}
+        .entry-table th { text-align: left; padding: 15px 10px; border-bottom: 2px solid var(--text-color); font-family: var(--handwriting-font); font-size: 20px; color: var(--light-text);}
+        .entry-table td { padding: 15px 10px; border-bottom: 1px dashed var(--border-color); font-family: var(--handwriting-font); font-size: 18px; color: var(--text-color); transition: 0.2s;}
+        .entry-table tr:hover td { background: var(--hover-bg); cursor: pointer; }
         
-        .editor-section { background: transparent; padding: 20px 0; margin-bottom: 50px; }
+        /* Nút quay lại */
+        .back-btn { font-family: var(--handwriting-font); font-size: 18px; font-weight: bold; color: var(--accent-color); cursor: pointer; background: none; border: none; padding: 0; display: inline-flex; align-items: center; gap: 5px; margin-bottom: 20px; transition: 0.2s;}
+        .back-btn:hover { transform: translateX(-5px); }
+
+        /* --- TRÌNH SOẠN THẢO TRÊN NỀN GIAO DIỆN CHÍNH --- */
+        .editor-section { width: 100%; padding: 20px 0; }
         .input-title { width: 100%; border: none; border-bottom: 1px dashed var(--border-color); font-family: var(--handwriting-font); font-size: 45px; padding-bottom: 10px; margin-bottom: 25px; background: transparent; color: var(--text-color); outline: none; }
         .input-title::placeholder { color: var(--light-text); opacity: 0.7; }
-        
         .toolbar { display: flex; gap: 15px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); flex-wrap: wrap; justify-content: flex-end; align-items: center;}
-        
-        /* Cân chỉnh Box chọn màu */
-        .color-picker-wrapper { 
-            display:flex; align-items:center; gap:5px; border:2px solid var(--text-color); 
-            padding: 0.6em 0.6em 0em;
-            background: var(--panel-bg); box-shadow: 2px 2px 0px 0px var(--text-color); 
-            font-family: var(--handwriting-font); font-weight: bold; font-size: 16px;
-        }
+        .color-picker-wrapper { display:flex; align-items:center; gap:5px; border:2px solid var(--text-color); padding: 0.6em 0.6em 0em; background: var(--panel-bg); box-shadow: 2px 2px 0px 0px var(--text-color); font-family: var(--handwriting-font); font-weight: bold; font-size: 16px; }
         .color-picker-wrapper input[type="color"] { border:none; padding:0; width: 22px; height: 26px; background:transparent; cursor: pointer; transform: translateY(-2px);}
-
-        .editor-box { width: 100%; min-height: 40vh; outline: none; font-family: var(--handwriting-font); font-size: var(--editor-fs); line-height: 1.8; color: var(--text-color); padding-top: 10px; font-weight: 400;font-variant-ligatures: contextual common-ligatures;
-    font-feature-settings: "calt" 1, "liga" 1;}
+        .folder-select { padding: 7px 10px 3px 10px; font-family: var(--handwriting-font); font-size: 18px; font-weight: bold; background: var(--panel-bg); color: var(--text-color); border: 2px solid var(--text-color); outline: none; box-shadow: 2px 2px 0px 0px var(--text-color); cursor: pointer; }
+        .editor-box { width: 100%; min-height: 40vh; outline: none; font-family: var(--handwriting-font); font-size: var(--editor-fs); line-height: 1.8; color: var(--text-color); padding-top: 10px; font-weight: 400; font-variant-ligatures: contextual common-ligatures; font-feature-settings: "calt" 1, "liga" 1;}
         .editor-box[placeholder]:empty:before { content: attr(placeholder); color: var(--light-text); opacity: 0.7; pointer-events: none; display: block; }
-        
-        /* --- BÀI VIẾT CŨ --- */
-        .entries-section { background: transparent; padding: 20px 0; }
-        .entry { margin-bottom: 40px; position: relative; scroll-margin-top: 80px; padding-bottom: 30px; border-bottom: 1px dashed var(--border-color); }
-        .entry:last-child { border-bottom: none; }
-        .entry-title { font-family: var(--handwriting-font); font-size: 35px; margin-bottom: 5px; color: var(--text-color); }
-        .entry-date { font-family: var(--handwriting-font); font-size: 16px; color: var(--light-text); margin-bottom: 15px; }
-        .entry-content { font-family: var(--handwriting-font); font-size: var(--editor-fs); line-height: 1.8; letter-spacing: 1px;font-variant-ligatures: contextual common-ligatures;
-font-feature-settings: "calt" 1, "liga" 1;}
+        .word-count-display { font-family: var(--handwriting-font); font-size: 18px; font-weight: bold; color: var(--accent-color); margin-top: 10px; text-align: right; text-shadow: 1px 1px 0px rgba(0,0,0,0.1); }
 
         /* --- MODAL THÙNG RÁC --- */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 3000; display: none; justify-content: center; align-items: center; }
@@ -274,49 +216,88 @@ font-feature-settings: "calt" 1, "liga" 1;}
 
     <div id="auth-screen">
         <div class="auth-container">
-            <h1>My diary</h1>
+            <h1>My Notebook</h1>
             <input type="email" id="auth-email" class="input" placeholder="Email của bạn">
             <input type="password" id="auth-password" class="input" placeholder="Mật khẩu">
-            
             <button class="button-confirm" id="btn-login" onclick="handleAuth('login')">Đăng Nhập</button>
             <button class="auth-switch" onclick="toggleAuthMode()">Chưa có tài khoản? Đăng ký ngay</button>
             <button class="auth-forgot" onclick="handleForgotPassword()">Quên mật khẩu?</button>
-            
             <div id="auth-message" class="auth-msg"></div>
         </div>
     </div>
 
     <div id="main-app">
-        
-        <!-- NÚT MENU THU GỌN VÀ DỜI TRÁNH SCROLLBAR -->
         <button class="btn cube" id="openMenuBtn" style="--d4af37: #d4af37;">
             <span class="bg-top" style="background:#d4af37;"><span class="bg-inner"></span></span>
             <span class="bg-right" style="background:#d4af37;"><span class="bg-inner"></span></span>
             <span class="bg" style="background:#d4af37;"><span class="bg-inner"></span></span>
-            <!-- Dùng font thẳng chuẩn cho biểu tượng ☰ để không bị méo -->
             <span class="text" style="color: #d4af37; font-size: 22px; font-family: 'Inter', sans-serif; transform: translateY(0px);">☰</span>
         </button>
 
+        <!-- MENU CÀI ĐẶT BÊN PHẢI -->
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                Cài đặt <button id="closeMenuBtn" style="background:none; border:none; cursor:pointer; font-size: 28px; color: var(--text-color); font-weight: bold; font-family: 'Inter', sans-serif;">&times;</button>
+                Menu <button id="closeMenuBtn" style="background:none; border:none; cursor:pointer; font-size: 24px; color: var(--text-color); font-weight: bold; font-family: 'Inter', sans-serif;">&times;</button>
             </div>
             
             <div class="sidebar-box">
-                <div style="font-family: var(--handwriting-font); font-size: 16px; margin-bottom: 20px; color: var(--light-text);">
-                    Tài khoản: <strong id="user-email-display" style="color: var(--text-color);">...</strong>
-                </div>
-                <div class="setting-item"><label>Chế độ Tối</label><input type="checkbox" id="darkModeToggle"></div>
-                <div class="setting-item"><label>Cỡ chữ</label><input type="range" id="fontSizeSlider" min="18" max="40" value="30"></div>
+                <!-- BOX: MUỐN VIẾT GÌ ĐÓ -->
+                <button class="btn cube btn-full" onclick="openEditor()" style="margin-bottom: 25px; padding: 0.8em; font-size: 18px; margin-top: 0;">
+                    <span class="bg-top" style="background:#d4af37;"><span class="bg-inner"></span></span>
+                    <span class="bg-right" style="background:#d4af37;"><span class="bg-inner"></span></span>
+                    <span class="bg" style="background:#d4af37;"><span class="bg-inner"></span></span>
+                    <span class="text" style="color: #d4af37;">✍️ Muốn viết gì đó</span>
+                </button>
+
+                <!-- ACCORDION CÀI ĐẶT TABS -->
+                <details class="menu-accordion">
+                    <summary>📁 Quản lý Tabs</summary>
+                    <div class="accordion-content">
+                        <div style="display:flex; flex-direction:column; gap:5px; margin-bottom:15px;">
+                            <input type="text" id="newTabName" class="setting-input" placeholder="Tên Tab mới...">
+                            <button class="btn cube btn-full" onclick="createNewTab()" style="padding: 0.3em; font-size: 14px; margin-top:0;">
+                                <span class="bg-top" style="background:#1c98eb;"><span class="bg-inner"></span></span>
+                                <span class="bg-right" style="background:#1c98eb;"><span class="bg-inner"></span></span>
+                                <span class="bg" style="background:#1c98eb;"><span class="bg-inner"></span></span>
+                                <span class="text" style="color: #1c98eb;">Tạo Tab</span>
+                            </button>
+                        </div>
+                        <div id="tabSettingsList"></div>
+                    </div>
+                </details>
+
+                <!-- ACCORDION CÀI ĐẶT THƯ MỤC -->
+                <details class="menu-accordion">
+                    <summary>📂 Quản lý Thư mục</summary>
+                    <div class="accordion-content">
+                        <div style="display:flex; flex-direction:column; gap:5px; margin-bottom:15px;">
+                            <input type="text" id="newFolderName" class="setting-input" placeholder="Tên Thư mục mới...">
+                            <input type="text" id="newFolderImage" class="setting-input" placeholder="Link ảnh bìa (không bắt buộc)...">
+                            <button class="btn cube btn-full" onclick="createNewFolder()" style="padding: 0.3em; font-size: 14px; margin-top:0;">
+                                <span class="bg-top" style="background:#5cb85c;"><span class="bg-inner"></span></span>
+                                <span class="bg-right" style="background:#5cb85c;"><span class="bg-inner"></span></span>
+                                <span class="bg" style="background:#5cb85c;"><span class="bg-inner"></span></span>
+                                <span class="text" style="color: #5cb85c;">Tạo Thư mục</span>
+                            </button>
+                        </div>
+                        <div id="folderSettingsList"></div>
+                    </div>
+                </details>
                 
-                <button class="btn cube btn-full" onclick="openTrashModal()">
+                <!-- CÀI ĐẶT HỆ THỐNG -->
+                <div style="margin-top: 25px; border-top: 1px dashed var(--border-color); padding-top: 15px;">
+                    <div class="setting-item"><label>Chế độ Tối</label><input type="checkbox" id="darkModeToggle"></div>
+                    <div class="setting-item"><label>Cỡ chữ đọc</label><input type="range" id="fontSizeSlider" min="18" max="40" value="30"></div>
+                </div>
+
+                <button class="btn cube btn-full" onclick="openTrashModal()" style="margin-top: 20px; font-size: 16px; padding: 0.5em;">
                     <span class="bg-top" style="background:#d4af37;"><span class="bg-inner"></span></span>
                     <span class="bg-right" style="background:#d4af37;"><span class="bg-inner"></span></span>
                     <span class="bg" style="background:#d4af37;"><span class="bg-inner"></span></span>
                     <span class="text" style="color: #d4af37;">Thùng rác</span>
                 </button>
                 
-                <button class="btn cube btn-full" onclick="handleLogout()">
+                <button class="btn cube btn-full" onclick="handleLogout()" style="margin-top: 15px; font-size: 16px; padding: 0.5em;">
                     <span class="bg-top" style="background:#d9534f;"><span class="bg-inner"></span></span>
                     <span class="bg-right" style="background:#d9534f;"><span class="bg-inner"></span></span>
                     <span class="bg" style="background:#d9534f;"><span class="bg-inner"></span></span>
@@ -325,64 +306,80 @@ font-feature-settings: "calt" 1, "liga" 1;}
             </div>
 
             <div class="sidebar-box" style="flex-grow: 1; border-bottom: none;">
-                <h3 style="font-family: var(--handwriting-font); font-size: 20px; margin-top: 0;">Nhật ký cũ</h3>
-                <ul class="history-list" id="sidebarHistoryList"><li style="font-size: 16px; color: gray;">Đang tải...</li></ul>
+                <h3 style="font-family: var(--handwriting-font); font-size: 18px; margin-top: 0;">Lịch sử (Tab này)</h3>
+                <ul class="history-list" id="sidebarHistoryList"><li style="font-size: 14px; color: gray;">Đang tải...</li></ul>
             </div>
         </div>
 
+        <!-- MÀN HÌNH CHÍNH (BLOG VIEW & EDITOR) -->
         <div class="main-content">
             <div class="container">
-                <header><h1 class="diary-title">My diary</h1></header>
-                <main>
-                    <div class="editor-section">
-                        <input type="text" id="entryTitle" class="input-title" placeholder="Chủ đề hôm nay...">
-                        
-                        <div class="toolbar">
-                            <button class="btn-tool" onclick="insertTab()" title="Khoảng lùi đầu dòng"><div><span>Tab ⇥</span></div></button>
-                            <button class="btn-tool" onclick="formatText('bold')" title="In đậm"><div><span><b>B</b></span></div></button>
-                            <button class="btn-tool" onclick="formatText('italic')" title="In nghiêng"><div><span><i>I</i></span></div></button>
-                            <button class="btn-tool" onclick="formatText('justifyLeft')" title="Căn trái"><div><span>Trái</span></div></button>
-                            <button class="btn-tool" onclick="formatText('justifyCenter')" title="Căn giữa"><div><span>Giữa</span></div></button>
-                            <!-- NÚT CĂN ĐỀU -->
-                            <button class="btn-tool" onclick="formatText('justifyFull')" title="Căn đều"><div><span>Đều</span></div></button>
-                            
-                            <div class="color-picker-wrapper">
-                                <span>Màu</span>
-                                <input type="color" id="textColorPicker" oninput="changeColor(this.value)">
-                            </div>
-                        </div>
-                        
-                        <div id="diaryEditor" class="editor-box" contenteditable="true" placeholder="Trang giấy đang chờ bạn viết..."></div>
-                        
-                        <div style="display: flex; justify-content: flex-end; margin-top: 40px; gap: 15px;">
-                            <button id="cancelEditBtn" class="btn cube" style="display: none;" onclick="cancelEdit()">
-                                <span class="bg-top" style="background:#888;"><span class="bg-inner"></span></span>
-                                <span class="bg-right" style="background:#888;"><span class="bg-inner"></span></span>
-                                <span class="bg" style="background:#888;"><span class="bg-inner"></span></span>
-                                <span class="text" style="color: #888;">Hủy</span>
-                            </button>
+                <header>
+                    <h1 class="diary-title">My Notebook</h1>
+                    <div id="tabsContainer" class="tabs-container"></div>
+                </header>
+                
+                <!-- VIEW 1: TRANG CHÍNH CỦA TAB -->
+                <main id="mainBlogView">
+                    <div id="folderGrid" class="folder-grid"></div>
+                    
+                    <div id="looseEntriesSection" style="margin-top: 40px; border-top: 2px solid var(--text-color); padding-top: 20px;">
+                        <h3 style="font-family: var(--handwriting-font); font-size: 24px; margin-bottom: 10px;">Bài viết rời</h3>
+                        <div id="looseEntriesTable"></div>
+                    </div>
+                </main>
 
-                            <button id="saveBtn" class="btn cube">
-                                <span class="bg-top" style="background:#d4af37;"><span class="bg-inner"></span></span>
-                                <span class="bg-right" style="background:#d4af37;"><span class="bg-inner"></span></span>
-                                <span class="bg" style="background:#d4af37;"><span class="bg-inner"></span></span>
-                                <span class="text" style="color: #d4af37;">Lưu trang nhật ký</span>
-                            </button>
+                <!-- VIEW 2: CHI TIẾT THƯ MỤC -->
+                <main id="folderDetailView" style="display: none;">
+                    <button class="back-btn" onclick="closeFolderView()">⬅ Quay lại danh sách</button>
+                    <h2 id="folderDetailTitle" style="font-family: 'Dancing Script', cursive; font-size: 55px; border-bottom: 1px dashed var(--border-color); padding-bottom: 10px; margin-top: 0; margin-bottom: 20px;">Tên thư mục</h2>
+                    <div id="folderEntriesTable"></div>
+                </main>
+
+                <!-- VIEW 3: TRÌNH SOẠN THẢO NẰM THẲNG TRÊN NỀN -->
+                <main id="editorView" class="editor-section" style="display: none;">
+                    <button class="back-btn" onclick="closeEditor()">⬅ Quay lại</button>
+                    
+                    <input type="text" id="entryTitle" class="input-title" placeholder="Chủ đề hôm nay...">
+                    
+                    <div class="toolbar">
+                        <select id="folderSelect" class="folder-select">
+                            <option value="">-- Không xếp vào thư mục --</option>
+                        </select>
+
+                        <button class="btn-tool" onclick="insertTab()" title="Khoảng lùi đầu dòng"><div><span>Tab ⇥</span></div></button>
+                        <button class="btn-tool" onclick="formatText('bold')" title="In đậm"><div><span><b>B</b></span></div></button>
+                        <button class="btn-tool" onclick="formatText('italic')" title="In nghiêng"><div><span><i>I</i></span></div></button>
+                        <button class="btn-tool" onclick="formatText('justifyLeft')" title="Căn trái"><div><span>Trái</span></div></button>
+                        <button class="btn-tool" onclick="formatText('justifyCenter')" title="Căn giữa"><div><span>Giữa</span></div></button>
+                        <button class="btn-tool" onclick="formatText('justifyFull')" title="Căn đều"><div><span>Đều</span></div></button>
+                        
+                        <div class="color-picker-wrapper">
+                            <span>Màu</span>
+                            <input type="color" id="textColorPicker" oninput="changeColor(this.value)">
                         </div>
                     </div>
                     
-                    <div class="entries-section">
-                        <h2>Những ngày đã qua</h2>
-                        <div id="entriesList"></div>
+                    <div id="diaryEditor" class="editor-box" contenteditable="true" placeholder="Trang giấy đang chờ bạn viết..."></div>
+                    <div id="liveWordCount" class="word-count-display">0 chữ</div>
+                    
+                    <div style="display: flex; justify-content: flex-end; margin-top: 20px; gap: 15px;">
+                        <button id="saveBtn" class="btn cube inline">
+                            <span class="bg-top" style="background:#d4af37;"><span class="bg-inner"></span></span>
+                            <span class="bg-right" style="background:#d4af37;"><span class="bg-inner"></span></span>
+                            <span class="bg" style="background:#d4af37;"><span class="bg-inner"></span></span>
+                            <span class="text" style="color: #d4af37;">Lưu trang</span>
+                        </button>
                     </div>
                 </main>
+
             </div>
         </div>
     </div>
 
     <!-- MODAL THÙNG RÁC -->
     <div class="modal-overlay" id="trashModal">
-        <div class="modal-content">
+        <div class="modal-content" style="max-width: 650px;">
             <div class="modal-header">
                 <h2>🗑️ Thùng rác</h2>
                 <button onclick="document.getElementById('trashModal').style.display='none'" style="background:none; border:none; cursor:pointer; font-size: 28px; color: var(--text-color); font-weight: bold; font-family: 'Inter', sans-serif;">&times;</button>
@@ -396,7 +393,7 @@ font-feature-settings: "calt" 1, "liga" 1;}
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, orderBy, where } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBGmLt1ka6mEVFcAlKU0-q6or66jTsuep4",
@@ -410,18 +407,36 @@ font-feature-settings: "calt" 1, "liga" 1;}
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+        
         const diaryCollection = collection(db, "diaries");
+        const tabsCollection = collection(db, "notebook_tabs");
+        const foldersCollection = collection(db, "notebook_folders");
 
         let currentUser = null; 
         let trashEntriesData = []; 
+        let globalParsedEntries = []; 
+        let allDiariesGlobal = []; // Lưu tất cả bài viết để đếm lúc xóa tab/folder
         let currentEditingId = null;
         let activeEntriesData = {}; 
+
+        let allTabs = [];
+        let allFolders = [];
+        let currentTabId = null;
+        let currentFolderViewId = null; // Ghi nhớ thư mục đang xem
 
         let isLoginMode = true;
         const emailInput = document.getElementById('auth-email');
         const passwordInput = document.getElementById('auth-password');
         const authMsg = document.getElementById('auth-message');
         const btnLogin = document.getElementById('btn-login');
+        const editor = document.getElementById('diaryEditor');
+
+        function countWords(str) { return str.replace(/<[^>]*>/g, ' ').trim().split(/\s+/).filter(w => w.length > 0).length; }
+
+        editor.addEventListener('input', () => {
+            const words = countWords(editor.innerHTML);
+            document.getElementById('liveWordCount').innerText = `${words} chữ`;
+        });
 
         window.toggleAuthMode = function() {
             isLoginMode = !isLoginMode;
@@ -458,16 +473,15 @@ font-feature-settings: "calt" 1, "liga" 1;}
         }
 
         window.handleLogout = async function() { if(confirm("Bạn có chắc muốn đăng xuất?")) await signOut(auth); };
-
         function showAuthMsg(msg, type) { authMsg.innerText = msg; authMsg.className = "auth-msg " + type; authMsg.style.display = "block"; }
 
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
                 currentUser = user;
                 document.getElementById('auth-screen').style.display = 'none';
                 document.getElementById('main-app').style.display = 'block';
                 document.getElementById('user-email-display').innerText = user.email;
-                loadEntries();
+                await loadCoreData(); 
             } else {
                 currentUser = null;
                 document.getElementById('auth-screen').style.display = 'flex';
@@ -475,9 +489,181 @@ font-feature-settings: "calt" 1, "liga" 1;}
             }
         });
 
+        // --- CỐT LÕI TẢI DỮ LIỆU ---
+        async function loadCoreData() {
+            if (!currentUser) return;
+            
+            const qTabs = query(tabsCollection, where("userId", "==", currentUser.uid));
+            const tabSnap = await getDocs(qTabs);
+            allTabs = [];
+            tabSnap.forEach(doc => allTabs.push({ id: doc.id, ...doc.data() }));
+            allTabs.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+
+            if (allTabs.length === 0) {
+                const newTabRef = await addDoc(tabsCollection, { userId: currentUser.uid, name: "Chung", createdAt: new Date().toISOString() });
+                allTabs.push({ id: newTabRef.id, name: "Chung" });
+            }
+            if (!currentTabId || !allTabs.find(t => t.id === currentTabId)) { currentTabId = allTabs[0].id; }
+
+            const qFolders = query(foldersCollection, where("userId", "==", currentUser.uid));
+            const folderSnap = await getDocs(qFolders);
+            allFolders = [];
+            folderSnap.forEach(doc => allFolders.push({ id: doc.id, ...doc.data() }));
+            allFolders.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+
+            renderTabs();
+            renderFolderSelect();
+            renderSidebarSettings();
+            await loadEntries();
+        }
+
+        function renderSidebarSettings() {
+            const tabListEl = document.getElementById('tabSettingsList');
+            tabListEl.innerHTML = '<div style="font-size:13px; color:var(--light-text); margin-bottom:5px;">Danh sách Tabs:</div>';
+            allTabs.forEach(tab => {
+                tabListEl.innerHTML += `
+                    <div class="list-item-row">
+                        <span style="font-weight:bold; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:140px;">${tab.name}</span>
+                        <div class="action-btns">
+                            <button onclick="editTab('${tab.id}')" title="Đổi tên">✏️</button>
+                            <button onclick="deleteTab('${tab.id}')" title="Xóa">🗑️</button>
+                        </div>
+                    </div>`;
+            });
+
+            const folderListEl = document.getElementById('folderSettingsList');
+            const tabFolders = allFolders.filter(f => f.tabId === currentTabId);
+            folderListEl.innerHTML = '<div style="font-size:13px; color:var(--light-text); margin-bottom:5px;">Thư mục trong Tab hiện tại:</div>';
+            if (tabFolders.length === 0) { folderListEl.innerHTML += '<div style="font-size:13px; color:gray; font-style:italic;">Chưa có thư mục nào</div>'; }
+            tabFolders.forEach(f => {
+                folderListEl.innerHTML += `
+                    <div class="list-item-row">
+                        <span style="font-weight:bold; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:140px;">${f.name}</span>
+                        <div class="action-btns">
+                            <button onclick="editFolder('${f.id}')" title="Sửa">✏️</button>
+                            <button onclick="deleteFolder('${f.id}')" title="Xóa">🗑️</button>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        window.createNewTab = async function() {
+            const name = document.getElementById('newTabName').value.trim();
+            if(!name) return showToast("Vui lòng nhập tên Tab!");
+            await addDoc(tabsCollection, { userId: currentUser.uid, name: name, createdAt: new Date().toISOString() });
+            document.getElementById('newTabName').value = "";
+            showToast("Đã tạo Tab mới!");
+            await loadCoreData();
+        }
+
+        window.editTab = async function(id) {
+            const tab = allTabs.find(t => t.id === id);
+            const newName = prompt("Nhập tên mới cho Tab:", tab.name);
+            if(newName && newName.trim() !== "") {
+                await updateDoc(doc(db, "notebook_tabs", id), { name: newName.trim() });
+                showToast("Đã đổi tên Tab!");
+                await loadCoreData();
+            }
+        }
+
+        // TÍNH NĂNG ĐẾM BÀI VIẾT KHI XÓA TAB
+        window.deleteTab = async function(id) {
+            if(allTabs.length <= 1) return alert("Không thể xóa Tab cuối cùng!");
+            const count = allDiariesGlobal.filter(e => e.tabId === id || (!e.tabId && allTabs[0].id === id)).length;
+            if(confirm(`Hiện tại tab này có ${count} bài viết. Bạn chắc chắn muốn xóa?`)) {
+                await deleteDoc(doc(db, "notebook_tabs", id));
+                if(currentTabId === id) currentTabId = allTabs.find(t => t.id !== id).id;
+                showToast("Đã xóa Tab!");
+                await loadCoreData();
+            }
+        }
+
+        window.createNewFolder = async function() {
+            const name = document.getElementById('newFolderName').value.trim();
+            const imageUrl = document.getElementById('newFolderImage').value.trim();
+            if(!name) return showToast("Vui lòng nhập tên Thư mục!");
+            if(!currentTabId) return showToast("Lỗi: Không có Tab nào được chọn!");
+            
+            const folderRef = await addDoc(foldersCollection, { 
+                userId: currentUser.uid, tabId: currentTabId, name: name, image: imageUrl, createdAt: new Date().toISOString() 
+            });
+            document.getElementById('newFolderName').value = "";
+            document.getElementById('newFolderImage').value = "";
+            showToast("Đã tạo Thư mục mới!");
+            await loadCoreData();
+            const selectEl = document.getElementById('folderSelect');
+            if(selectEl) selectEl.value = folderRef.id;
+        }
+
+        window.editFolder = async function(id) {
+            const folder = allFolders.find(f => f.id === id);
+            const newName = prompt("Nhập tên mới cho Thư mục:", folder.name);
+            if(newName && newName.trim() !== "") {
+                const newImg = prompt("Nhập link ảnh bìa mới (để trống nếu muốn xóa ảnh):", folder.image || "");
+                await updateDoc(doc(db, "notebook_folders", id), { name: newName.trim(), image: newImg !== null ? newImg.trim() : folder.image });
+                showToast("Đã cập nhật Thư mục!");
+                await loadCoreData();
+            }
+        }
+
+        // TÍNH NĂNG ĐẾM BÀI VIẾT KHI XÓA FOLDER
+        window.deleteFolder = async function(id) {
+            const count = allDiariesGlobal.filter(e => e.folderId === id).length;
+            if(confirm(`Hiện tại thư mục này có ${count} bài viết. Bạn chắc chắn muốn xóa?`)) {
+                await deleteDoc(doc(db, "notebook_folders", id));
+                showToast("Đã xóa Thư mục!");
+                if(currentFolderViewId === id) closeFolderView();
+                await loadCoreData();
+            }
+        }
+
+        function renderTabs() {
+            const container = document.getElementById('tabsContainer');
+            container.innerHTML = '';
+            allTabs.forEach(tab => {
+                const isActive = tab.id === currentTabId;
+                const activeClass = isActive ? "active-tab" : "";
+                
+                const btn = document.createElement('button');
+                btn.className = `btn cube inline ${activeClass}`;
+                btn.onclick = () => switchTab(tab.id);
+                btn.innerHTML = `
+                    <span class="bg-top" style="background:#d4af37;"><span class="bg-inner"></span></span>
+                    <span class="bg-right" style="background:#d4af37;"><span class="bg-inner"></span></span>
+                    <span class="bg" style="background:#d4af37;"><span class="bg-inner"></span></span>
+                    <span class="text" style="color: #d4af37; padding: 0px 5px;">${tab.name}</span>
+                `;
+                container.appendChild(btn);
+            });
+        }
+
+        function renderFolderSelect() {
+            const select = document.getElementById('folderSelect');
+            const currentVal = select.value; 
+            select.innerHTML = '<option value="">-- Không xếp vào thư mục --</option>';
+            const tabFolders = allFolders.filter(f => f.tabId === currentTabId);
+            tabFolders.forEach(folder => {
+                const opt = document.createElement('option');
+                opt.value = folder.id;
+                opt.textContent = `📁 ${folder.name}`;
+                select.appendChild(opt);
+            });
+            if (currentVal && tabFolders.find(f => f.id === currentVal)) { select.value = currentVal; }
+        }
+
+        async function switchTab(tabId) {
+            currentTabId = tabId;
+            closeEditor();
+            closeFolderView();
+            renderTabs();
+            renderFolderSelect();
+            renderSidebarSettings(); 
+            await loadEntries();
+        }
+
+        // Giao diện
         document.getElementById('openMenuBtn').addEventListener('click', () => document.getElementById('sidebar').classList.add('open'));
         document.getElementById('closeMenuBtn').addEventListener('click', () => document.getElementById('sidebar').classList.remove('open'));
-        
         document.addEventListener('click', function(event) {
             const sidebar = document.getElementById('sidebar');
             const openBtn = document.getElementById('openMenuBtn');
@@ -485,20 +671,16 @@ font-feature-settings: "calt" 1, "liga" 1;}
                 sidebar.classList.remove('open');
             }
         });
-
         document.getElementById('darkModeToggle').addEventListener('change', (e) => e.target.checked ? document.body.classList.add('dark-mode') : document.body.classList.remove('dark-mode'));
         document.getElementById('fontSizeSlider').addEventListener('input', (e) => document.documentElement.style.setProperty('--editor-fs', e.target.value + 'px'));
 
         let savedRange = null;
-        const editor = document.getElementById('diaryEditor');
-
         ['keyup', 'mouseup', 'mouseleave'].forEach(event => {
             editor.addEventListener(event, () => {
                 const sel = window.getSelection();
                 if (sel.rangeCount > 0) { savedRange = sel.getRangeAt(0); }
             });
         });
-
         window.changeColor = function(color) { 
             editor.focus(); 
             if (savedRange) {
@@ -509,118 +691,226 @@ font-feature-settings: "calt" 1, "liga" 1;}
             document.execCommand("styleWithCSS", false, true);
             document.execCommand('foreColor', false, color); 
         };
-        
         window.formatText = function(cmd) { document.execCommand(cmd, false, null); editor.focus(); };
         window.insertTab = function() { document.execCommand('insertHTML', false, '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'); editor.focus(); };
         editor.addEventListener('keydown', function(e) { if (e.key === 'Tab') { e.preventDefault(); insertTab(); } });
-
         function showToast(message) { const toast = document.getElementById('toast'); toast.textContent = message; toast.className = "show"; setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000); }
-        function formatDate(dateString) { return new Date(dateString).toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }); }
+        function formatDate(dateString) { return new Date(dateString).toLocaleDateString('vi-VN', { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }); }
+
+        // --- XỬ LÝ NHẬT KÝ & HIỂN THỊ BẢNG ---
+        function buildTableHTML(entries) {
+            if(entries.length === 0) return `<div style="text-align:center; padding:20px; color:var(--light-text); font-style:italic;">Trống.</div>`;
+            
+            let html = `<table class="entry-table">
+                <thead>
+                    <tr>
+                        <th style="width: 50%;">Tiêu đề</th>
+                        <th style="width: 25%;">Ngày tạo</th>
+                        <th style="width: 15%;">Số chữ</th>
+                        <th style="width: 10%; text-align:center;"></th>
+                    </tr>
+                </thead>
+                <tbody>`;
+            entries.forEach(e => {
+                html += `
+                    <tr onclick="editEntry('${e.id}')">
+                        <td style="font-weight:bold;">${e.title}</td>
+                        <td>${e.dateStr}</td>
+                        <td>${e.wCount}</td>
+                        <td style="text-align:center;">
+                            <button onclick="event.stopPropagation(); moveToTrash('${e.id}')" style="background:none; border:none; cursor:pointer; font-size:18px; transition:0.2s;" title="Xóa">🗑️</button>
+                        </td>
+                    </tr>`;
+            });
+            html += `</tbody></table>`;
+            return html;
+        }
 
         async function loadEntries() {
             if (!currentUser) return;
             try {
-                const q = query(diaryCollection, where("userId", "==", currentUser.uid), orderBy("createdAt", "desc"));
+                const q = query(diaryCollection, where("userId", "==", currentUser.uid));
                 const querySnapshot = await getDocs(q);
                 
-                const entriesList = document.getElementById('entriesList');
+                const folderGridEl = document.getElementById('folderGrid');
+                const looseEntriesTableEl = document.getElementById('looseEntriesTable');
                 const sidebarHistoryList = document.getElementById('sidebarHistoryList');
-                entriesList.innerHTML = ''; sidebarHistoryList.innerHTML = '';
+                
+                sidebarHistoryList.innerHTML = '';
                 trashEntriesData = []; 
                 activeEntriesData = {}; 
+                globalParsedEntries = [];
 
-                let hasActive = false;
+                let allEntries = [];
+                querySnapshot.forEach((docSnap) => { allEntries.push({ id: docSnap.id, ...docSnap.data() }); });
+                allEntries.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                
+                // Lưu biến toàn cục để phục vụ cho tính năng Đếm bài viết khi Xóa
+                allDiariesGlobal = allEntries; 
 
-                querySnapshot.forEach((docSnap) => {
-                    const data = docSnap.data();
-                    const docId = docSnap.id;
+                const looseEntries = [];
+                const tabFolders = allFolders.filter(f => f.tabId === currentTabId);
+
+                allEntries.forEach((data) => {
+                    const docId = data.id;
                     const dateStr = formatDate(data.createdAt);
-                    const displayTitle = data.title && data.title.trim() !== "" ? data.title : "Nhật ký không tên";
+                    const displayTitle = data.title && data.title.trim() !== "" ? data.title : "Không tên";
+                    const wCount = data.wordCount || 0;
 
                     if (data.status === 'trash') {
                         trashEntriesData.push({ id: docId, title: displayTitle, date: dateStr, content: data.content });
                         return; 
                     }
 
-                    hasActive = true;
-                    activeEntriesData[docId] = { title: data.title, content: data.content }; 
+                    const eTabId = data.tabId || (allTabs.length > 0 ? allTabs[0].id : null);
+                    if (eTabId !== currentTabId) return; 
 
-                    const entryDiv = document.createElement('div');
-                    entryDiv.className = 'entry';
-                    entryDiv.id = `entry-${docId}`;
-                    entryDiv.innerHTML = `
-                        <div class="entry-actions">
-                            <button class="btn cube" onclick="editEntry('${docId}')">
-                                <span class="bg-top" style="background:#1c98eb;"><span class="bg-inner"></span></span>
-                                <span class="bg-right" style="background:#1c98eb;"><span class="bg-inner"></span></span>
-                                <span class="bg" style="background:#1c98eb;"><span class="bg-inner"></span></span>
-                                <span class="text" style="color: #1c98eb;">Sửa</span>
-                            </button>
-                            <button class="btn cube" onclick="moveToTrash('${docId}')">
-                                <span class="bg-top" style="background:#d9534f;"><span class="bg-inner"></span></span>
-                                <span class="bg-right" style="background:#d9534f;"><span class="bg-inner"></span></span>
-                                <span class="bg" style="background:#d9534f;"><span class="bg-inner"></span></span>
-                                <span class="text" style="color: #d9534f;">Xóa</span>
-                            </button>
-                        </div>
-                        <div class="entry-title">${displayTitle}</div><div class="entry-date">${dateStr}</div>
-                        <div class="entry-content">${data.content}</div>`;
-                    entriesList.appendChild(entryDiv);
+                    activeEntriesData[docId] = { title: data.title, content: data.content, folderId: data.folderId || "" }; 
+                    const entryObj = { id: docId, title: displayTitle, dateStr, content: data.content, wCount, folderId: data.folderId };
+                    
+                    globalParsedEntries.push(entryObj);
 
+                    if (data.folderId && tabFolders.find(f => f.id === data.folderId)) {
+                        // Nằm trong thư mục hợp lệ của tab này
+                    } else {
+                        looseEntries.push(entryObj);
+                    }
+
+                    // Lịch sử Sidebar
                     const li = document.createElement('li'); li.className = 'history-item';
-                    li.innerHTML = `<a href="#entry-${docId}" onclick="document.getElementById('sidebar').classList.remove('open')">
-                                        <div class="history-title">${displayTitle}</div><div class="history-date">${dateStr}</div></a>`;
+                    li.innerHTML = `<a href="#" onclick="editEntry('${docId}'); document.getElementById('sidebar').classList.remove('open')">
+                                        <div class="history-title">${displayTitle}</div>
+                                        <div class="history-date">${dateStr}</div></a>`;
                     sidebarHistoryList.appendChild(li);
                 });
 
-                if(!hasActive) {
-                    entriesList.innerHTML = '<p style="color:var(--light-text); font-style:italic; text-align:center; font-family:var(--handwriting-font); font-size:18px;">Bạn chưa có trang nhật ký nào.</p>';
-                    sidebarHistoryList.innerHTML = '<li style="font-size: 16px; color: gray;">Trống</li>';
+                if(globalParsedEntries.length === 0) {
+                    sidebarHistoryList.innerHTML = '<li style="font-size: 14px; color: gray;">Trống</li>';
                 }
+
+                // Render Folder Grid
+                folderGridEl.innerHTML = '';
+                if(tabFolders.length > 0) {
+                    tabFolders.forEach(f => {
+                        const bgStyle = f.image ? `background-image: url('${f.image}');` : `background: linear-gradient(135deg, #d4af37, #b58900);`;
+                        folderGridEl.innerHTML += `
+                            <div class="folder-box" onclick="openFolderView('${f.id}')">
+                                <div class="folder-img" style="${bgStyle}"></div>
+                                <div class="folder-name">${f.name}</div>
+                            </div>
+                        `;
+                    });
+                } else {
+                    folderGridEl.innerHTML = '<div style="color:var(--light-text); width:100%; text-align:center; font-style:italic;">Bạn chưa tạo thư mục nào.</div>';
+                }
+
+                // Render Bài viết rời
+                looseEntriesTableEl.innerHTML = buildTableHTML(looseEntries);
+
+                // Cập nhật lại giao diện bảng Folder đang mở (nếu có)
+                if(currentFolderViewId) {
+                    openFolderView(currentFolderViewId);
+                }
+
             } catch (error) { console.error(error); }
         }
 
-        /* --- XỬ LÝ CHỈNH SỬA & CUỘN TRANG & ĐẶT CON TRỎ --- */
+        // --- HÀM QUẢN LÝ VIEW ---
+        window.openFolderView = function(folderId) {
+            currentFolderViewId = folderId; // Lưu trạng thái
+            const folder = allFolders.find(f => f.id === folderId);
+            if(!folder) return;
+
+            document.getElementById('mainBlogView').style.display = 'none';
+            document.getElementById('editorView').style.display = 'none';
+            document.getElementById('folderDetailView').style.display = 'block';
+            
+            document.getElementById('folderDetailTitle').innerText = `📁 ${folder.name}`;
+            const entriesInFolder = globalParsedEntries.filter(e => e.folderId === folderId);
+            document.getElementById('folderEntriesTable').innerHTML = buildTableHTML(entriesInFolder);
+            
+            // Cuộn lên đầu
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.closeFolderView = function() {
+            currentFolderViewId = null; // Xóa trạng thái
+            document.getElementById('folderDetailView').style.display = 'none';
+            document.getElementById('editorView').style.display = 'none';
+            document.getElementById('mainBlogView').style.display = 'block';
+        }
+
+        // --- HÀM QUẢN LÝ TRÌNH SOẠN THẢO (EDITOR) FULL VIEW ---
+        window.openEditor = function() {
+            document.getElementById('sidebar').classList.remove('open');
+            currentEditingId = null;
+            document.getElementById('entryTitle').value = "";
+            editor.innerHTML = "";
+            document.getElementById('folderSelect').value = currentFolderViewId || ""; // Auto gán thư mục nếu đang mở
+            document.getElementById('liveWordCount').innerText = "0 chữ";
+            document.querySelector('#saveBtn .text').textContent = "Lưu trang mới";
+            
+            // Ẩn tất cả và mở Editor
+            document.getElementById('mainBlogView').style.display = 'none';
+            document.getElementById('folderDetailView').style.display = 'none';
+            document.getElementById('editorView').style.display = 'block';
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => document.getElementById('entryTitle').focus(), 100);
+        }
+
+        window.closeEditor = function() {
+            currentEditingId = null;
+            document.getElementById('editorView').style.display = 'none';
+            // Dựa vào lịch sử để quay lại đúng chỗ
+            if (currentFolderViewId) {
+                openFolderView(currentFolderViewId);
+            } else {
+                document.getElementById('mainBlogView').style.display = 'block';
+            }
+        }
+
         window.editEntry = function(docId) {
+            document.getElementById('sidebar').classList.remove('open'); // Đóng menu nếu đang mở
             const entry = activeEntriesData[docId];
             if(!entry) return;
 
             document.getElementById('entryTitle').value = entry.title;
-            const editorEl = document.getElementById('diaryEditor');
-            editorEl.innerHTML = entry.content;
+            editor.innerHTML = entry.content;
+            document.getElementById('folderSelect').value = entry.folderId;
+            document.getElementById('liveWordCount').innerText = countWords(entry.content) + " chữ";
             
             currentEditingId = docId;
-            document.querySelector('#saveBtn .text').textContent = "Cập nhật nhật ký";
-            document.getElementById('cancelEditBtn').style.display = 'inline-block';
+            document.querySelector('#saveBtn .text').textContent = "Cập nhật bài viết";
             
-            // Focus và đặt con trỏ ở cuối
-            editorEl.focus();
-            if (typeof window.getSelection !== "undefined" && typeof document.createRange !== "undefined") {
-                const range = document.createRange();
-                range.selectNodeContents(editorEl);
-                range.collapse(false); // Đưa trỏ về cuối đoạn văn bản
-                const sel = window.getSelection();
-                sel.removeAllRanges();
-                sel.addRange(range);
-            }
-
-            // Tự động cuộn mượt mà lên vị trí bài viết
+            // Ẩn tất cả và mở Editor
+            document.getElementById('mainBlogView').style.display = 'none';
+            document.getElementById('folderDetailView').style.display = 'none';
+            document.getElementById('editorView').style.display = 'block';
+            
             window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        window.cancelEdit = function() {
-            currentEditingId = null;
-            document.getElementById('entryTitle').value = "";
-            document.getElementById('diaryEditor').innerHTML = "";
             
-            document.querySelector('#saveBtn .text').textContent = "Lưu trang nhật ký";
-            document.getElementById('cancelEditBtn').style.display = 'none';
+            // Đặt con trỏ vào cuối
+            setTimeout(() => {
+                editor.focus();
+                if (typeof window.getSelection !== "undefined" && typeof document.createRange !== "undefined") {
+                    const range = document.createRange();
+                    range.selectNodeContents(editor);
+                    range.collapse(false);
+                    const sel = window.getSelection();
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+                }
+            }, 100);
         }
 
         document.getElementById('saveBtn').addEventListener('click', async () => {
             const title = document.getElementById('entryTitle').value.trim();
-            const content = document.getElementById('diaryEditor').innerHTML.trim(); 
+            const content = editor.innerHTML.trim(); 
             if (content === "" || content === "<br>") { showToast("Bạn chưa viết nội dung!"); return; }
+
+            const wordCount = countWords(content);
+            const folderId = document.getElementById('folderSelect').value;
 
             document.getElementById('saveBtn').style.pointerEvents = "none";
             document.querySelector('#saveBtn .text').textContent = "Đang lưu...";
@@ -628,41 +918,31 @@ font-feature-settings: "calt" 1, "liga" 1;}
             try {
                 if (currentEditingId) {
                     await updateDoc(doc(db, "diaries", currentEditingId), {
-                        title: title, 
-                        content: content
+                        title: title, content: content, folderId: folderId, wordCount: wordCount
                     });
-                    showToast("Đã cập nhật nhật ký!");
+                    showToast("Đã cập nhật bài viết!");
                 } else {
                     await addDoc(diaryCollection, {
-                        userId: currentUser.uid, 
-                        title: title, 
-                        content: content,
-                        status: 'active', 
-                        createdAt: new Date().toISOString()
+                        userId: currentUser.uid, tabId: currentTabId, folderId: folderId, title: title, content: content, wordCount: wordCount, status: 'active', createdAt: new Date().toISOString()
                     });
-                    showToast("Đã lưu trang nhật ký mới!");
+                    showToast("Đã lưu trang mới!");
                 }
                 
-                cancelEdit(); 
+                closeEditor(); 
                 loadEntries();
             } catch (error) { 
                 showToast("Lỗi khi lưu!"); 
             } finally { 
                 document.getElementById('saveBtn').style.pointerEvents = "auto";
-                if(!currentEditingId) {
-                    document.querySelector('#saveBtn .text').textContent = "Lưu trang nhật ký"; 
-                }
             }
         });
 
+        // --- XÓA & THÙNG RÁC ---
         window.moveToTrash = async function(docId) {
             if(confirm("Chuyển bài viết này vào Thùng rác?")) {
                 await updateDoc(doc(db, "diaries", docId), { status: 'trash' });
                 showToast("Đã chuyển vào thùng rác!");
-                
-                if(currentEditingId === docId) {
-                    cancelEdit();
-                }
+                if(currentEditingId === docId) closeEditor();
                 loadEntries(); 
             }
         }
@@ -670,7 +950,6 @@ font-feature-settings: "calt" 1, "liga" 1;}
         window.openTrashModal = function() {
             const pinKey = `diary_pin_${currentUser.uid}`;
             let savedPin = localStorage.getItem(pinKey);
-
             if (!savedPin) {
                 let newPin = prompt("💡 Tạo mã PIN (Ví dụ: 1234) bảo vệ Thùng rác:");
                 if (!newPin) return; 
@@ -678,7 +957,6 @@ font-feature-settings: "calt" 1, "liga" 1;}
                 savedPin = newPin;
                 alert("Đã lưu mã PIN!");
             }
-
             let enteredPin = prompt("🔒 Nhập mã PIN để mở Thùng rác:");
             if (enteredPin === null) return; 
             if (enteredPin !== savedPin) { alert("Sai mã PIN!"); return; }
@@ -691,12 +969,10 @@ font-feature-settings: "calt" 1, "liga" 1;}
         function renderTrashItems() {
             const container = document.getElementById('trashListContainer');
             container.innerHTML = '';
-
             if (trashEntriesData.length === 0) {
                 container.innerHTML = '<p style="color:var(--light-text); text-align:center; font-family:var(--handwriting-font); font-size:18px;">Thùng rác trống.</p>';
                 return;
             }
-
             trashEntriesData.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'trash-item';
@@ -704,13 +980,13 @@ font-feature-settings: "calt" 1, "liga" 1;}
                     <div class="trash-title">${item.title}</div>
                     <div style="font-size:16px; color:gray; margin-bottom:10px; font-family:var(--handwriting-font);">${item.date}</div>
                     <div class="trash-actions">
-                        <button class="btn cube" onclick="restoreFromTrash('${item.id}')">
+                        <button class="btn cube inline" onclick="restoreFromTrash('${item.id}')">
                             <span class="bg-top" style="background:#5cb85c;"><span class="bg-inner"></span></span>
                             <span class="bg-right" style="background:#5cb85c;"><span class="bg-inner"></span></span>
                             <span class="bg" style="background:#5cb85c;"><span class="bg-inner"></span></span>
                             <span class="text" style="color: #5cb85c;">Khôi phục</span>
                         </button>
-                        <button class="btn cube" onclick="hardDelete('${item.id}')">
+                        <button class="btn cube inline" onclick="hardDelete('${item.id}')">
                             <span class="bg-top" style="background:#d9534f;"><span class="bg-inner"></span></span>
                             <span class="bg-right" style="background:#d9534f;"><span class="bg-inner"></span></span>
                             <span class="bg" style="background:#d9534f;"><span class="bg-inner"></span></span>
