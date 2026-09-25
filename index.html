@@ -11,25 +11,45 @@
     <meta name="apple-mobile-web-app-title" content="My Notebook">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <link href="https://fonts.googleapis.com/css2?family=Borel&family=Inter:wght@300;400;500;700;900&family=Lora:ital,wght@0,400;0,500;1,400&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <!-- CÁC FONT CƠ BẢN -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
     <style>
+        /* --- IMPORT TRƯỚC TẤT CẢ CÁC FONT ĐỂ MENU OPTION HIỂN THỊ ĐƯỢC DÁNG CHỮ --- */
+        @import url('https://fonts.googleapis.com/css2?family=Borel&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Comfortaa&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Dosis&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Mitr&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Momo+Signature&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noticia+Text&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand+SC&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playwrite+BE+VLG&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playwrite+ES&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playwrite+VN&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Potta+One&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Shantell+Sans&display=swap');
+
         :root {
             --text-color: #222222;
             --light-text: #666666;
             --border-color: rgba(150, 150, 150, 0.4);
-            --accent-color: #d4af37;
+            --accent-color: #d4af37; 
             --panel-bg: rgba(255, 255, 255, 0.95); 
             --hover-bg: rgba(200, 200, 200, 0.3);
             --editor-fs: 30px; 
+            --btn-fs: 18px; /* Cỡ chữ của nút mặc định */
             --handwriting-font: 'Borel', cursive;
         }
 
         body.dark-mode {
-            --text-color: #f5f5f5;
-            --light-text: #cccccc;
-            --border-color: rgba(200, 200, 200, 0.3);
             --panel-bg: rgba(40, 40, 45, 0.95);
             --hover-bg: rgba(80, 80, 80, 0.4);
+            --border-color: rgba(200, 200, 200, 0.3);
         }
 
         body { 
@@ -47,7 +67,7 @@
 
         .bg-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0); z-index: -1; pointer-events: none;
+            background: rgba(255, 255, 255, 0.2); z-index: -1; pointer-events: none;
             transition: background 0.3s ease;
         }
         body.dark-mode .bg-overlay { background: rgba(0, 0, 0, 0.6); }
@@ -76,7 +96,7 @@
         .button-confirm {
             margin: 10px auto 20px auto; width: 100%; height: 45px; border-radius: 5px;
             border: 2px solid var(--main-color); background-color: var(--bg-color);
-            box-shadow: 4px 4px var(--main-color); font-size: 20px; font-weight: 900;
+            box-shadow: 4px 4px var(--main-color); font-size: var(--btn-fs) !important; font-weight: 900;
             color: var(--font-color); cursor: pointer; transition: 0.1s; font-family: var(--handwriting-font); padding-top: 5px;
         }
         .button-confirm:active { box-shadow: 0px 0px var(--main-color); transform: translate(3px, 3px); }
@@ -86,11 +106,11 @@
         .auth-msg.error { color: #d9534f; } .auth-msg.success { color: #5cb85c; }
         #auth-screen { position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
 
-        /* --- BUTTON CUBE --- */
+        /* --- BUTTON CUBE (MẶC ĐỊNH) --- */
         .btn {
             display: block; padding: 0.7em 1.2em; background: transparent;
-            outline: none; border: 0; color: #d4af37; letter-spacing: 0.1em;
-            font-family: var(--handwriting-font); font-size: 18px; font-weight: bold;
+            outline: none; border: 0; color: var(--accent-color); letter-spacing: 0.1em;
+            font-family: var(--handwriting-font); font-size: var(--btn-fs) !important; font-weight: bold;
             cursor: pointer; z-index: 1; position: relative;
         }
         .btn.inline { display: inline-block; }
@@ -101,7 +121,10 @@
         .cube .bg-right { position: absolute; background: inherit; top: -5px; z-index: 0; bottom: 5px; width: 10px; left: 100%; transform: skew(0, -45deg); transition: all 0.4s; }
         .cube .bg-right .bg-inner { left: 0; }
         .cube .bg-inner { background: #28282d; position: absolute; left: 2px; right: 2px; top: 2px; bottom: 2px; }
-        .cube .text { position: relative; transition: all 0.4s; display: inline-block; transform: translateY(3px); }
+        
+        .cube .text { position: relative; transition: all 0.4s; display: inline-block; transform: translateY(0px); } /* Căn giữa cho font thường */
+        body[data-font="Borel"] .cube .text { transform: translateY(3px); } /* Bù trừ riêng cho Borel */
+        
         .cube:hover .bg-inner { background: transparent; transition: all 0.4s; }
         .cube:hover .text { color: #28282d !important; transition: all 0.4s; }
         .cube:active { z-index: 9999; animation: bounce 0.1s linear; }
@@ -114,18 +137,6 @@
         /* --- TABS BÊN DƯỚI TIÊU ĐỀ --- */
         .tabs-container { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 10px; margin-bottom: 40px; }
 
-        /* --- NÚT TOOLBAR TRONG EDITOR --- */
-        .btn-tool {
-            --stone-50: #fafaf9; --stone-800: #292524; --yellow-400: #facc15;
-            font-size: 1.1rem; cursor: pointer; position: relative; 
-            font-family: var(--handwriting-font); font-weight: bold; line-height: 1; padding: 1px; border-radius: 9999px; border: none;
-            background-color: var(--stone-800); color: var(--stone-800); box-shadow: 0.5px 0.5px 0 0 var(--stone-800), 1px 1px 0 0 var(--stone-800), 0 0 0 2px var(--stone-50); transition: transform 150ms, box-shadow 150ms;
-        }
-        .btn-tool:hover { transform: translate(1px, 1px); box-shadow: 0 0 0 2px var(--stone-50); }
-        .btn-tool > div { position: relative; pointer-events: none; background-color: var(--yellow-400); border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 9999px; overflow: hidden; }
-        .btn-tool > div::before { content: ""; position: absolute; inset: 0; opacity: 0.5; background-image: radial-gradient(rgb(255 255 255 / 80%) 20%, transparent 20%), radial-gradient(rgb(255 255 255 / 100%) 20%, transparent 20%); background-position: 0 0, 4px 4px; background-size: 8px 8px; mix-blend-mode: hard-light; animation: dots 0.5s infinite linear; }
-        .btn-tool > div > span { position: relative; display: flex; align-items: center; justify-content: center; padding: 0.8rem 1rem 0.35rem; filter: drop-shadow(0 -1px 0 rgba(255, 255, 255, 0.25)); transform: translateY(4px); }
-
         /* --- SIDEBAR MENU --- */
         #main-app { display: none; width: 100%; height: 100%; }
         .sidebar { 
@@ -134,27 +145,28 @@
             border-left: 2px solid var(--text-color); box-shadow: -6px 0px 0px var(--text-color);
         }
         .sidebar.open { right: 0; }
-        .sidebar-header { padding: 15px 20px; font-family: var(--handwriting-font); font-size: 20px; font-weight: bold; border-bottom: 2px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .sidebar-header { padding: 17px 20px 15px; font-family: var(--handwriting-font); font-size: 20px; font-weight: bold; border-bottom: 2px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
         .sidebar-box { padding: 15px 20px; border-bottom: 2px solid var(--border-color); }
-        .setting-item { margin-bottom: 12px; font-family: var(--handwriting-font); font-size: 15px; display: flex; align-items: center; justify-content: space-between; font-weight: 600;}
-        .setting-input { padding: 6px 10px; font-family: var(--handwriting-font); font-size: 14px; width: 100%; box-sizing: border-box; border: 2px solid var(--text-color); background: transparent; color: var(--text-color); margin-top: 5px; outline: none;}
+        .sidebar-box h3 { padding-top: 2px; }
+        .setting-item { margin-bottom: 12px; padding-top: 2px; font-family: var(--handwriting-font); font-size: 15px; display: flex; align-items: center; justify-content: space-between; font-weight: 600;}
+        .setting-input { padding: 8px 10px 4px 10px; font-family: var(--handwriting-font); font-size: 14px; width: 100%; box-sizing: border-box; border: 2px solid var(--text-color); background: transparent; color: var(--text-color); margin-top: 5px; outline: none;}
         .setting-input::placeholder { color: var(--light-text); }
         .setting-input:focus { border-color: var(--accent-color); }
         
         .menu-accordion { margin-top: 15px; border: 2px solid var(--text-color); border-radius: 5px; overflow: hidden; font-family: var(--handwriting-font); font-size: 15px;}
-        .menu-accordion summary { background: var(--hover-bg); padding: 10px; font-weight: bold; cursor: pointer; outline: none; list-style: none; display: flex; align-items: center; gap: 8px;}
+        .menu-accordion summary { background: var(--hover-bg); padding: 12px 10px 10px; font-weight: bold; cursor: pointer; outline: none; list-style: none; display: flex; align-items: center; gap: 8px;}
         .menu-accordion summary::-webkit-details-marker { display: none; }
         .menu-accordion summary:active { background: var(--border-color); }
         .menu-accordion .accordion-content { padding: 15px; background: rgba(0,0,0,0.03); border-top: 2px solid var(--text-color);}
         body.dark-mode .menu-accordion .accordion-content { background: rgba(255,255,255,0.03); }
         
-        .list-item-row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding: 6px; border-bottom: 1px dashed var(--border-color); font-size: 14px; background: var(--panel-bg); border-radius: 4px; border: 1px solid var(--border-color);}
+        .list-item-row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding: 8px 6px 6px; border-bottom: 1px dashed var(--border-color); font-size: 14px; background: var(--panel-bg); border-radius: 4px; border: 1px solid var(--border-color);}
         .action-btns button { background: none; border: none; cursor: pointer; font-size: 14px; transition: transform 0.1s;}
         .action-btns button:active { transform: scale(0.9); }
 
         .history-list { list-style: none; padding: 0; margin: 0; }
         .history-item { margin-bottom: 15px; }
-        .history-item a { text-decoration: none; color: var(--text-color); display: block; padding: 8px; transition: background 0.2s; border-radius: 4px;}
+        .history-item a { text-decoration: none; color: var(--text-color); display: block; padding: 10px 8px 8px; transition: background 0.2s; border-radius: 4px;}
         .history-item a:hover { background-color: var(--hover-bg); }
         .history-title { font-family: var(--handwriting-font); font-size: 16px; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .history-date { font-family: var(--handwriting-font); font-size: 12px; color: var(--light-text); }
@@ -188,11 +200,21 @@
         .editor-section { width: 100%; padding: 20px 0; }
         .input-title { width: 100%; border: none; border-bottom: 1px dashed var(--border-color); font-family: var(--handwriting-font); font-size: 45px; padding-bottom: 10px; margin-bottom: 25px; background: transparent; color: var(--text-color); outline: none; }
         .input-title::placeholder { color: var(--light-text); opacity: 0.7; }
-        .toolbar { display: flex; gap: 15px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color); flex-wrap: wrap; justify-content: flex-end; align-items: center;}
-        .color-picker-wrapper { display:flex; align-items:center; gap:5px; border:2px solid var(--text-color); padding: 0.6em 0.6em 0em; background: var(--panel-bg); box-shadow: 2px 2px 0px 0px var(--text-color); font-family: var(--handwriting-font); font-weight: bold; font-size: 16px; }
-        .color-picker-wrapper input[type="color"] { border:none; padding:0; width: 22px; height: 26px; background:transparent; cursor: pointer; transform: translateY(-2px);}
-        .folder-select { padding: 7px 10px 3px 10px; font-family: var(--handwriting-font); font-size: 18px; font-weight: bold; background: var(--panel-bg); color: var(--text-color); border: 2px solid var(--text-color); outline: none; box-shadow: 2px 2px 0px 0px var(--text-color); cursor: pointer; }
-        .editor-box { width: 100%; min-height: 40vh; outline: none; font-family: var(--handwriting-font); font-size: var(--editor-fs); line-height: 1.8; color: var(--text-color); padding-top: 10px; font-weight: 400; font-variant-ligatures: contextual common-ligatures; font-feature-settings: "calt" 1, "liga" 1;}
+        
+        /* --- KHUNG CÔNG CỤ DỌC (EDITOR) --- */
+        .editor-container { display: flex; gap: 20px; align-items: flex-start; position: relative; width: 100%; }
+        .toolbar-vertical { position: sticky; top: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 10; min-width: 110px;}
+        .toolbar-vertical .btn { width: 100%; text-align: center; } /* Đồng bộ khung rộng của thanh công cụ */
+        .editor-main-area { flex-grow: 1; min-width: 0; display: flex; flex-direction: column; }
+        .folder-select { padding: 9px 10px 1px 10px; font-family: var(--handwriting-font); font-size: 18px; font-weight: bold; background: var(--panel-bg); color: var(--text-color); border: 2px solid var(--text-color); outline: none; box-shadow: 2px 2px 0px 0px var(--text-color); cursor: pointer; }
+        
+        @media (max-width: 768px) {
+            .editor-container { flex-direction: column; }
+            .toolbar-vertical { flex-direction: row; flex-wrap: wrap; position: static; top: auto; justify-content: flex-start; margin-bottom: 15px; width: 100%; min-width: auto; }
+            .toolbar-vertical .btn { width: auto; }
+        }
+
+        .editor-box { width: 100%; min-height: 40vh; outline: none; font-family: var(--handwriting-font) !important; font-size: var(--editor-fs) !important; line-height: 1.8; color: var(--text-color); padding-top: 10px; font-weight: 400; font-variant-ligatures: normal; font-feature-settings: "calt" 0; }
         .editor-box[placeholder]:empty:before { content: attr(placeholder); color: var(--light-text); opacity: 0.7; pointer-events: none; display: block; }
         .word-count-display { font-family: var(--handwriting-font); font-size: 18px; font-weight: bold; color: var(--accent-color); margin-top: 10px; text-align: right; text-shadow: 1px 1px 0px rgba(0,0,0,0.1); }
 
@@ -206,8 +228,137 @@
         .trash-title { font-family: var(--handwriting-font); font-size: 25px; margin-bottom: 5px; color: var(--text-color);}
         .trash-actions { display: flex; gap: 15px; margin-top: 25px; flex-wrap: wrap;}
 
-        #toast { visibility: hidden; background-color: var(--text-color); color: var(--panel-bg); text-align: center; padding: 12px 25px; position: fixed; z-index: 4000; bottom: 30px; left: 50%; transform: translateX(-50%); font-family: var(--handwriting-font); font-size: 18px; font-weight: bold; border: 2px solid var(--panel-bg); opacity: 0; transition: opacity 0.3s; box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.5); }
+        #toast { 
+            visibility: hidden; background-color: var(--text-color); color: var(--panel-bg); 
+            text-align: center; 
+            padding: 14px 25px 12px 25px; 
+            position: fixed; z-index: 4000; bottom: 30px; left: 50%; transform: translateX(-50%); 
+            font-family: var(--handwriting-font); font-size: 18px; font-weight: bold; 
+            border: 2px solid var(--panel-bg); opacity: 0; transition: opacity 0.3s; 
+            box-shadow: 4px 4px 0px 0px rgba(0,0,0,0.5); 
+        }
         #toast.show { visibility: visible; opacity: 1; }
+
+        /* --- LỊCH SỬ HÌNH ẢNH --- */
+        .history-grid-container { display: flex; gap: 8px; margin-top: 8px; overflow-x: auto; padding-bottom: 5px; }
+        .history-grid-container::-webkit-scrollbar { height: 4px; }
+        .history-grid-container::-webkit-scrollbar-thumb { background: var(--text-color); border-radius: 4px; }
+        .history-img-box {
+            width: 35px; height: 35px; flex-shrink: 0; border-radius: 4px; border: 2px solid var(--text-color);
+            background-size: cover; background-position: center; cursor: pointer; transition: transform 0.2s;
+        }
+        .history-img-box:hover { transform: scale(1.1); }
+
+        /* ========================================= */
+        /* --- THEMES SETTING: BUTTON STYLES --- */
+        /* ========================================= */
+
+        /* LOẠI 1: Gradient Hover */
+        body[data-btn-theme="type1"] .btn .bg-top,
+        body[data-btn-theme="type1"] .btn .bg-right,
+        body[data-btn-theme="type1"] .btn .bg { display: none !important; }
+
+        body[data-btn-theme="type1"] .btn {
+            border-radius: 30em; border: none; overflow: hidden; position: relative; z-index: 1;
+            box-shadow: 6px 6px 12px rgba(0,0,0,0.1), -6px -6px 12px rgba(255,255,255,0.05);
+            background: transparent;
+            padding: 0.7em 1.2em; /* Font chuẩn */
+        }
+        body[data-font="Borel"][data-btn-theme="type1"] .btn {
+            padding: calc(0.7em + 3px) 1.2em calc(0.7em - 3px) 1.2em; /* Fix cho Borel */
+        }
+        body[data-btn-theme="type1"] .btn::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 0; height: 100%; border-radius: 30em;
+            background-image: linear-gradient(to right, var(--text-color) 0%, var(--accent-color) 100%);
+            transition: .5s ease; z-index: -1;
+        }
+        body[data-btn-theme="type1"] .btn:hover::before { width: 100%; }
+        body[data-btn-theme="type1"] .btn .text { display: block; padding: 0.2em; color: var(--text-color) !important; transition: 0.3s; }
+        body[data-btn-theme="type1"] .btn:hover .text { color: var(--panel-bg) !important; }
+        body[data-btn-theme="type1"] .color-picker-btn .text { display: flex; flex-direction: row; justify-content: center;}
+
+        /* LOẠI 2: Animated Rainbow Slider */
+        body[data-btn-theme="type2"] .btn .bg-top,
+        body[data-btn-theme="type2"] .btn .bg-right,
+        body[data-btn-theme="type2"] .btn .bg { display: none !important; }
+
+        body[data-btn-theme="type2"] .btn {
+            background-color: var(--accent-color); /* ĐÃ SỬA MÀU NỀN CỐ ĐỊNH */
+            border-radius: 4px;
+            border: none;
+            padding: 0.7em 1.2em;
+            overflow: hidden;
+            box-shadow: none;
+        }
+        body[data-font="Borel"][data-btn-theme="type2"] .btn {
+            padding: calc(0.7em + 3px) 1.2em calc(0.7em - 3px) 1.2em;
+        }
+        body[data-btn-theme="type2"] .btn .text {
+            display: block;
+            padding: 0;
+            font-size: var(--btn-fs) !important;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #fff !important;
+            transition: 0.3s;
+            transform: translateY(0px);
+        }
+        body[data-font="Borel"][data-btn-theme="type2"] .btn .text {
+            transform: translateY(3px);
+        }
+        body[data-btn-theme="type2"] .btn:hover {
+            background-image: linear-gradient(90deg, #53cbef 0%, #dcc66c 50%, #ffa3b6 75%, #53cbef 100%);
+            animation: slidernbw 5s linear infinite;
+        }
+        body[data-btn-theme="type2"] .btn:hover .text { color: #000 !important; }
+        
+        @keyframes slidernbw { to { background-position: 20vw; } }
+
+        /* Tăng kích thước riêng cho các nút Tabs của Loại 2 */
+        body[data-btn-theme="type2"] .tabs-container .btn {
+            padding: 18px 40px; 
+        }
+        body[data-font="Borel"][data-btn-theme="type2"] .tabs-container .btn {
+            padding: calc(18px + 3px) 40px calc(18px - 3px) 40px; 
+        }
+        body[data-btn-theme="type2"] .tabs-container .btn .text {
+            font-size: calc(var(--btn-fs) + 4px) !important; 
+        }
+
+        /* LOẠI 3: Animated Arrow & Circle */
+        body[data-btn-theme="type3"] .btn .bg-top,
+        body[data-btn-theme="type3"] .btn .bg-right { display: none !important; }
+
+        body[data-btn-theme="type3"] .btn {
+            position: relative; display: flex; align-items: center; justify-content: center; gap: 4px;
+            padding: 0.6em 1.5em;
+            border: 4px solid transparent; border-radius: 100px;
+            background-color: transparent; box-shadow: 0 0 0 2px var(--accent-color);
+            overflow: hidden; transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        body[data-font="Borel"][data-btn-theme="type3"] .btn {
+            padding: calc(0.6em + 3px) 1.5em calc(0.6em - 3px) 1.5em;
+        }
+        body[data-btn-theme="type3"] .btn::before { content: '➔'; position: absolute; left: -25%; top: 50%; transform: translateY(-50%); color: var(--accent-color); z-index: 9; transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1); }
+        body[data-btn-theme="type3"] .btn::after { content: '➔'; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--accent-color); z-index: 9; transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1); }
+
+        body[data-btn-theme="type3"] .btn .bg {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 20px; height: 20px; background-color: var(--accent-color) !important;
+            border-radius: 50%; opacity: 0; transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1); z-index: 0;
+        }
+        body[data-btn-theme="type3"] .btn .bg-inner { display: none; }
+
+        body[data-btn-theme="type3"] .btn .text { position: relative; z-index: 1; transform: translateX(-12px); transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1); color: var(--accent-color) !important; padding: 0;}
+        body[data-font="Borel"][data-btn-theme="type3"] .btn .text { transform: translate(-12px, 3px); }
+        
+        body[data-btn-theme="type3"] .btn:hover { box-shadow: 0 0 0 12px transparent; border-radius: 12px; }
+        body[data-btn-theme="type3"] .btn:hover::before { left: 16px; color: var(--panel-bg); }
+        body[data-btn-theme="type3"] .btn:hover::after { right: -25%; color: var(--panel-bg); }
+        body[data-btn-theme="type3"] .btn:hover .text { transform: translateX(12px); color: var(--panel-bg) !important; }
+        body[data-font="Borel"][data-btn-theme="type3"] .btn:hover .text { transform: translate(12px, 3px); }
+        body[data-btn-theme="type3"] .btn:hover .bg { width: 300px; height: 300px; opacity: 1; }
+        body[data-btn-theme="type3"] .btn:active { transform: scale(0.95); box-shadow: 0 0 0 4px var(--accent-color); }
     </style>
 </head>
 <body>
@@ -216,7 +367,7 @@
 
     <div id="auth-screen">
         <div class="auth-container">
-            <h1>My Notebook</h1>
+            <h1 class="app-title-display">My Notebook</h1>
             <input type="email" id="auth-email" class="input" placeholder="Email của bạn">
             <input type="password" id="auth-password" class="input" placeholder="Mật khẩu">
             <button class="button-confirm" id="btn-login" onclick="handleAuth('login')">Đăng Nhập</button>
@@ -227,11 +378,11 @@
     </div>
 
     <div id="main-app">
-        <button class="btn cube" id="openMenuBtn" style="--d4af37: #d4af37;">
-            <span class="bg-top" style="background:#d4af37;"><span class="bg-inner"></span></span>
-            <span class="bg-right" style="background:#d4af37;"><span class="bg-inner"></span></span>
-            <span class="bg" style="background:#d4af37;"><span class="bg-inner"></span></span>
-            <span class="text" style="color: #d4af37; font-size: 22px; font-family: 'Inter', sans-serif; transform: translateY(0px);">☰</span>
+        <button class="btn cube" id="openMenuBtn" style="background:none;">
+            <span class="bg-top" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+            <span class="bg-right" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+            <span class="bg" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+            <span class="text" style="color: var(--accent-color); font-size: 22px; font-family: 'Inter', sans-serif; transform: translateY(0px);">☰</span>
         </button>
 
         <!-- MENU CÀI ĐẶT BÊN PHẢI -->
@@ -242,12 +393,74 @@
             
             <div class="sidebar-box">
                 <!-- BOX: MUỐN VIẾT GÌ ĐÓ -->
-                <button class="btn cube btn-full" onclick="openEditor()" style="margin-bottom: 25px; padding: 0.8em; font-size: 18px; margin-top: 0;">
-                    <span class="bg-top" style="background:#d4af37;"><span class="bg-inner"></span></span>
-                    <span class="bg-right" style="background:#d4af37;"><span class="bg-inner"></span></span>
-                    <span class="bg" style="background:#d4af37;"><span class="bg-inner"></span></span>
-                    <span class="text" style="color: #d4af37;">✍️ Muốn viết gì đó</span>
+                <button class="btn cube btn-full" onclick="openEditor()" style="margin-bottom: 25px; padding: 0.8em; margin-top: 0;">
+                    <span class="bg-top" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                    <span class="bg-right" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                    <span class="bg" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                    <span class="text" style="color: var(--accent-color);">✍️ Muốn viết gì đó</span>
                 </button>
+
+                <!-- ACCORDION CÀI ĐẶT GIAO DIỆN & TIÊU ĐỀ -->
+                <details class="menu-accordion">
+                    <summary>🎨 Themes setting</summary>
+                    <div class="accordion-content">
+                        <input type="text" id="settingAppTitle" class="setting-input" placeholder="Tiêu đề (Mặc định: My Notebook)" oninput="document.querySelectorAll('.app-title-display').forEach(t => t.innerText = this.value || 'My Notebook')">
+                        
+                        <input type="text" id="settingBgUrl" class="setting-input" placeholder="Link ảnh nền (URL)..." oninput="document.body.style.backgroundImage = this.value ? `url('${this.value}')` : `url('1.jpg')`">
+                        <div class="history-grid-container" id="imageHistoryGrid"></div>
+                        
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px; font-weight:bold;">
+                            <label>Màu chữ:</label>
+                            <input type="color" id="settingTextColor" value="#222222" style="cursor:pointer; width:30px; height:30px; border:none; background:transparent;" oninput="document.documentElement.style.setProperty('--text-color', this.value)">
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; font-weight:bold;">
+                            <label>Màu nút:</label>
+                            <input type="color" id="settingBtnColor" value="#d4af37" style="cursor:pointer; width:30px; height:30px; border:none; background:transparent;" oninput="document.documentElement.style.setProperty('--accent-color', this.value)">
+                        </div>
+
+                        <!-- CHỌN KIỂU NÚT -->
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px; font-weight:bold;">
+                            <label>Kiểu nút:</label>
+                            <select id="settingBtnTheme" class="setting-input" style="width: 140px; margin-top: 0; padding: 4px;" onchange="document.body.dataset.btnTheme = this.value">
+                                <option value="default">Mặc định (Cube)</option>
+                                <option value="type1">Loại 1 (Gradient)</option>
+                                <option value="type2">Loại 2 (Rainbow Slider)</option>
+                                <option value="type3">Loại 3 (Animated)</option>
+                            </select>
+                        </div>
+
+                        <!-- CHỌN FONT CHỮ VỚI HIỂN THỊ TRỰC TIẾP KIỂU FONT -->
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; margin-bottom:20px; font-weight:bold;">
+                            <label>Font chữ:</label>
+                            <select id="settingFontFamily" class="setting-input" style="width: 140px; margin-top: 0; padding: 4px;" onchange="window.changeFontFamily(this.value)">
+                                <option value="Borel" style="font-family: 'Borel', cursive;">Borel</option>
+                                <option value="Roboto Flex" style="font-family: 'Roboto Flex', sans-serif;">Google Sans Flex</option>
+                                <option value="Playwrite BE VLG" style="font-family: 'Playwrite BE VLG', cursive;">Playwrite BE Guides</option>
+                                <option value="Roboto Slab" style="font-family: 'Roboto Slab', serif;">Roboto Slab</option>
+                                <option value="IBM Plex Mono" style="font-family: 'IBM Plex Mono', monospace;">IBM Plex Mono</option>
+                                <option value="Dosis" style="font-family: 'Dosis', sans-serif;">Dosis</option>
+                                <option value="Pacifico" style="font-family: 'Pacifico', cursive;">Pacifico</option>
+                                <option value="Comfortaa" style="font-family: 'Comfortaa', cursive;">Comfortaa</option>
+                                <option value="Playwrite VN" style="font-family: 'Playwrite VN', cursive;">Playwrite Việt Nam</option>
+                                <option value="Mitr" style="font-family: 'Mitr', sans-serif;">Mitr</option>
+                                <option value="Potta One" style="font-family: 'Potta One', cursive;">Potta One</option>
+                                <option value="Dongle" style="font-family: 'Dongle', sans-serif;">Dongle</option>
+                                <option value="Shantell Sans" style="font-family: 'Shantell Sans', cursive;">Shantell Sans</option>
+                                <option value="Patrick Hand SC" style="font-family: 'Patrick Hand SC', cursive;">Patrick Hand SC</option>
+                                <option value="Playwrite ES" style="font-family: 'Playwrite ES', cursive;">Playwrite España</option>
+                                <option value="Momo Signature" style="font-family: 'Momo Signature', cursive;">Momo Signature</option>
+                                <option value="Noticia Text" style="font-family: 'Noticia Text', serif;">Noticia Text</option>
+                            </select>
+                        </div>
+
+                        <button class="btn cube btn-full" onclick="saveUserSettings()" style="padding: 0.3em; margin-top: 10px;">
+                            <span class="bg-top" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                            <span class="bg-right" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                            <span class="bg" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                            <span class="text" style="color: var(--accent-color);">Lưu giao diện</span>
+                        </button>
+                    </div>
+                </details>
 
                 <!-- ACCORDION CÀI ĐẶT TABS -->
                 <details class="menu-accordion">
@@ -255,7 +468,7 @@
                     <div class="accordion-content">
                         <div style="display:flex; flex-direction:column; gap:5px; margin-bottom:15px;">
                             <input type="text" id="newTabName" class="setting-input" placeholder="Tên Tab mới...">
-                            <button class="btn cube btn-full" onclick="createNewTab()" style="padding: 0.3em; font-size: 14px; margin-top:0;">
+                            <button class="btn cube btn-full" onclick="createNewTab()" style="padding: 0.3em; margin-top: 10px;">
                                 <span class="bg-top" style="background:#1c98eb;"><span class="bg-inner"></span></span>
                                 <span class="bg-right" style="background:#1c98eb;"><span class="bg-inner"></span></span>
                                 <span class="bg" style="background:#1c98eb;"><span class="bg-inner"></span></span>
@@ -272,8 +485,11 @@
                     <div class="accordion-content">
                         <div style="display:flex; flex-direction:column; gap:5px; margin-bottom:15px;">
                             <input type="text" id="newFolderName" class="setting-input" placeholder="Tên Thư mục mới...">
+                            
                             <input type="text" id="newFolderImage" class="setting-input" placeholder="Link ảnh bìa (không bắt buộc)...">
-                            <button class="btn cube btn-full" onclick="createNewFolder()" style="padding: 0.3em; font-size: 14px; margin-top:0;">
+                            <div class="history-grid-container" id="folderImageHistoryGrid"></div>
+                            
+                            <button class="btn cube btn-full" onclick="createNewFolder()" style="padding: 0.3em; margin-top: 10px;">
                                 <span class="bg-top" style="background:#5cb85c;"><span class="bg-inner"></span></span>
                                 <span class="bg-right" style="background:#5cb85c;"><span class="bg-inner"></span></span>
                                 <span class="bg" style="background:#5cb85c;"><span class="bg-inner"></span></span>
@@ -286,18 +502,20 @@
                 
                 <!-- CÀI ĐẶT HỆ THỐNG -->
                 <div style="margin-top: 25px; border-top: 1px dashed var(--border-color); padding-top: 15px;">
-                    <div class="setting-item"><label>Chế độ Tối</label><input type="checkbox" id="darkModeToggle"></div>
-                    <div class="setting-item"><label>Cỡ chữ đọc</label><input type="range" id="fontSizeSlider" min="18" max="40" value="30"></div>
+                    <div class="setting-item"><label>Chế độ Tối</label><input type="checkbox" id="darkModeToggle" onchange="window.toggleDarkMode(this.checked)"></div>
+                    <div class="setting-item"><label>Cỡ chữ đọc</label><input type="range" id="fontSizeSlider" min="18" max="40" value="30" oninput="window.changeFontSize(this.value)"></div>
+                    <!-- THÊM THANH TRƯỢT CỠ CHỮ NÚT -->
+                    <div class="setting-item"><label>Cỡ chữ nút</label><input type="range" id="btnFontSizeSlider" min="12" max="30" value="18" oninput="window.changeBtnFontSize(this.value)"></div>
                 </div>
 
-                <button class="btn cube btn-full" onclick="openTrashModal()" style="margin-top: 20px; font-size: 16px; padding: 0.5em;">
-                    <span class="bg-top" style="background:#d4af37;"><span class="bg-inner"></span></span>
-                    <span class="bg-right" style="background:#d4af37;"><span class="bg-inner"></span></span>
-                    <span class="bg" style="background:#d4af37;"><span class="bg-inner"></span></span>
-                    <span class="text" style="color: #d4af37;">Thùng rác</span>
+                <button class="btn cube btn-full" onclick="openTrashModal()" style="margin-top: 20px; padding: 0.5em;">
+                    <span class="bg-top" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                    <span class="bg-right" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                    <span class="bg" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                    <span class="text" style="color: var(--accent-color);">Thùng rác</span>
                 </button>
                 
-                <button class="btn cube btn-full" onclick="handleLogout()" style="margin-top: 15px; font-size: 16px; padding: 0.5em;">
+                <button class="btn cube btn-full" onclick="handleLogout()" style="margin-top: 15px; padding: 0.5em;">
                     <span class="bg-top" style="background:#d9534f;"><span class="bg-inner"></span></span>
                     <span class="bg-right" style="background:#d9534f;"><span class="bg-inner"></span></span>
                     <span class="bg" style="background:#d9534f;"><span class="bg-inner"></span></span>
@@ -315,7 +533,7 @@
         <div class="main-content">
             <div class="container">
                 <header>
-                    <h1 class="diary-title">My Notebook</h1>
+                    <h1 class="diary-title app-title-display">My Notebook</h1>
                     <div id="tabsContainer" class="tabs-container"></div>
                 </header>
                 
@@ -323,8 +541,9 @@
                 <main id="mainBlogView">
                     <div id="folderGrid" class="folder-grid"></div>
                     
-                    <div id="looseEntriesSection" style="margin-top: 40px; border-top: 2px solid var(--text-color); padding-top: 20px;">
-                        <h3 style="font-family: var(--handwriting-font); font-size: 24px; margin-bottom: 10px;">Bài viết rời</h3>
+                    <!-- BÀI VIẾT CHƯA PHÂN THƯ MỤC (TỰ ĐỘNG ẨN NẾU TRỐNG) -->
+                    <div id="looseEntriesSection" style="margin-top: 40px; border-top: 2px solid var(--text-color); padding-top: 20px; display: none;">
+                        <h3 style="font-family: var(--handwriting-font); font-size: 24px; margin-bottom: 10px;">Chưa phân thư mục</h3>
                         <div id="looseEntriesTable"></div>
                     </div>
                 </main>
@@ -340,36 +559,85 @@
                 <main id="editorView" class="editor-section" style="display: none;">
                     <button class="back-btn" onclick="closeEditor()">⬅ Quay lại</button>
                     
-                    <input type="text" id="entryTitle" class="input-title" placeholder="Chủ đề hôm nay...">
+                    <input type="text" id="entryTitle" class="input-title" placeholder="Chủ đề bài viết...">
                     
-                    <div class="toolbar">
-                        <select id="folderSelect" class="folder-select">
-                            <option value="">-- Không xếp vào thư mục --</option>
-                        </select>
-
-                        <button class="btn-tool" onclick="insertTab()" title="Khoảng lùi đầu dòng"><div><span>Tab ⇥</span></div></button>
-                        <button class="btn-tool" onclick="formatText('bold')" title="In đậm"><div><span><b>B</b></span></div></button>
-                        <button class="btn-tool" onclick="formatText('italic')" title="In nghiêng"><div><span><i>I</i></span></div></button>
-                        <button class="btn-tool" onclick="formatText('justifyLeft')" title="Căn trái"><div><span>Trái</span></div></button>
-                        <button class="btn-tool" onclick="formatText('justifyCenter')" title="Căn giữa"><div><span>Giữa</span></div></button>
-                        <button class="btn-tool" onclick="formatText('justifyFull')" title="Căn đều"><div><span>Đều</span></div></button>
-                        
-                        <div class="color-picker-wrapper">
-                            <span>Màu</span>
-                            <input type="color" id="textColorPicker" oninput="changeColor(this.value)">
+                    <div class="editor-container">
+                        <!-- CỘT BÊN TRÁI: Các công cụ định dạng đứng dọc -->
+                        <div class="toolbar-vertical">
+                            <button class="btn cube inline" onclick="insertTab()" title="Khoảng lùi đầu dòng">
+                                <span class="bg-top" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                <span class="bg-right" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                <span class="bg" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                <span class="text" style="color: var(--accent-color);">⇥ Tab</span>
+                            </button>
+                            <button class="btn cube inline" onclick="formatText('bold')" title="In đậm">
+                                <span class="bg-top" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                <span class="bg-right" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                <span class="bg" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                <span class="text" style="color: var(--accent-color);"><b>B</b></span>
+                            </button>
+                            <button class="btn cube inline" onclick="formatText('italic')" title="In nghiêng">
+                                <span class="bg-top" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                <span class="bg-right" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                <span class="bg" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                <span class="text" style="color: var(--accent-color);"><i>I</i></span>
+                            </button>
+                            <button class="btn cube inline" onclick="formatText('justifyLeft')" title="Căn trái">
+                                <span class="bg-top" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                <span class="bg-right" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                <span class="bg" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                <span class="text" style="color: var(--accent-color);">Trái</span>
+                            </button>
+                            <button class="btn cube inline" onclick="formatText('justifyCenter')" title="Căn giữa">
+                                <span class="bg-top" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                <span class="bg-right" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                <span class="bg" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                <span class="text" style="color: var(--accent-color);">Giữa</span>
+                            </button>
+                            <button class="btn cube inline" onclick="formatText('justifyFull')" title="Căn đều">
+                                <span class="bg-top" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                <span class="bg-right" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                <span class="bg" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                <span class="text" style="color: var(--accent-color);">Đều</span>
+                            </button>
+                            
+                            <label class="btn cube inline color-picker-btn" title="Đổi màu chữ" style="cursor: pointer;">
+                                <span class="bg-top" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                <span class="bg-right" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                <span class="bg" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                <span class="text" style="color: var(--accent-color); display: flex; align-items: center; justify-content: center; gap: 6px;">
+                                    Màu
+                                    <input type="color" id="textColorPicker" oninput="changeColor(this.value)" style="border:none; outline:none; padding:0; width: 22px; height: 22px; background:transparent; cursor: pointer;">
+                                </span>
+                            </label>
                         </div>
-                    </div>
-                    
-                    <div id="diaryEditor" class="editor-box" contenteditable="true" placeholder="Trang giấy đang chờ bạn viết..."></div>
-                    <div id="liveWordCount" class="word-count-display">0 chữ</div>
-                    
-                    <div style="display: flex; justify-content: flex-end; margin-top: 20px; gap: 15px;">
-                        <button id="saveBtn" class="btn cube inline">
-                            <span class="bg-top" style="background:#d4af37;"><span class="bg-inner"></span></span>
-                            <span class="bg-right" style="background:#d4af37;"><span class="bg-inner"></span></span>
-                            <span class="bg" style="background:#d4af37;"><span class="bg-inner"></span></span>
-                            <span class="text" style="color: #d4af37;">Lưu trang</span>
-                        </button>
+
+                        <!-- KHUNG BÊN PHẢI: Trình soạn thảo và thông tin liên quan -->
+                        <div class="editor-main-area">
+                            <div id="diaryEditor" class="editor-box" contenteditable="true" placeholder="Trang giấy đang chờ bạn viết..."></div>
+                            <div id="liveWordCount" class="word-count-display">0 chữ</div>
+                            
+                            <!-- NGÀY GIỜ VÀ CHỌN THƯ MỤC NẰM Ở DƯỚI -->
+                            <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px; align-items: center; border-top: 1px dashed var(--border-color); padding-top: 20px;">
+                                <div style="display:flex; align-items:center; gap:5px;">
+                                    <label style="font-family:var(--handwriting-font); font-weight:bold;">🕒</label>
+                                    <input type="datetime-local" id="entryDate" class="setting-input" style="width: auto; padding: 8px 5px 2px 5px; margin:0; border: 2px solid var(--text-color); background: var(--panel-bg); font-weight:bold;">
+                                </div>
+                                <select id="folderSelect" class="folder-select" style="margin: 0;">
+                                    <option value="">-- Không xếp vào thư mục --</option>
+                                </select>
+                            </div>
+                            
+                            <!-- NÚT LƯU TRANG -->
+                            <div style="display: flex; justify-content: flex-end; margin-top: 20px; gap: 15px;">
+                                <button id="saveBtn" class="btn cube inline">
+                                    <span class="bg-top" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                    <span class="bg-right" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                    <span class="bg" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                                    <span class="text" style="color: var(--accent-color);">Lưu trang</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </main>
 
@@ -393,7 +661,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, getDoc, setDoc, query, where } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBGmLt1ka6mEVFcAlKU0-q6or66jTsuep4",
@@ -413,16 +681,18 @@
         const foldersCollection = collection(db, "notebook_folders");
 
         let currentUser = null; 
+        let currentSettings = { appTitle: "My Notebook", bgUrl: "", textColor: "#222222", btnColor: "#d4af37", btnTheme: "default", fontFamily: "Borel", recentImages: [], fontSize: "30", btnFontSize: "18" };
+
         let trashEntriesData = []; 
         let globalParsedEntries = []; 
-        let allDiariesGlobal = []; // Lưu tất cả bài viết để đếm lúc xóa tab/folder
+        let allDiariesGlobal = []; 
         let currentEditingId = null;
         let activeEntriesData = {}; 
 
         let allTabs = [];
         let allFolders = [];
         let currentTabId = null;
-        let currentFolderViewId = null; // Ghi nhớ thư mục đang xem
+        let currentFolderViewId = null; 
 
         let isLoginMode = true;
         const emailInput = document.getElementById('auth-email');
@@ -480,8 +750,13 @@
                 currentUser = user;
                 document.getElementById('auth-screen').style.display = 'none';
                 document.getElementById('main-app').style.display = 'block';
-                document.getElementById('user-email-display').innerText = user.email;
-                await loadCoreData(); 
+                
+                const emailDisplay = document.getElementById('user-email-display');
+                if (emailDisplay) {
+                    emailDisplay.innerText = user.email;
+                }
+                
+                await loadCoreData();
             } else {
                 currentUser = null;
                 document.getElementById('auth-screen').style.display = 'flex';
@@ -489,32 +764,176 @@
             }
         });
 
+        // --- CÀI ĐẶT NGƯỜI DÙNG & FONT & HÌNH ẢNH ---
+        window.changeFontFamily = function(fontName) {
+            document.documentElement.style.setProperty('--handwriting-font', "'" + fontName + "', cursive");
+            if (currentSettings) currentSettings.fontFamily = fontName;
+            document.body.dataset.font = fontName;
+        }
+
+        window.changeFontSize = function(size) {
+            document.documentElement.style.setProperty('--editor-fs', size + 'px');
+            if (currentSettings) currentSettings.fontSize = size;
+        }
+
+        window.changeBtnFontSize = function(size) {
+            document.documentElement.style.setProperty('--btn-fs', size + 'px');
+            if (currentSettings) currentSettings.btnFontSize = size;
+        }
+
+        window.toggleDarkMode = function(isDark) {
+            if(isDark) document.body.classList.add('dark-mode');
+            else document.body.classList.remove('dark-mode');
+        }
+
+        window.renderImageHistory = function() {
+            const urls = currentSettings.recentImages || [];
+            const html = urls.map(url => `
+                <div class="history-img-box" style="background-image: url('${url}')" onclick="selectHistoryImage('${url}')" title="${url}"></div>
+            `).join('');
+            
+            const bgGrid = document.getElementById('imageHistoryGrid');
+            if (bgGrid) bgGrid.innerHTML = html;
+            
+            const folderGrid = document.getElementById('folderImageHistoryGrid');
+            if (folderGrid) folderGrid.innerHTML = html;
+        }
+
+        window.selectHistoryImage = function(url) {
+            const bgInput = document.getElementById('settingBgUrl');
+            if (bgInput) {
+                bgInput.value = url;
+                document.body.style.backgroundImage = `url('${url}')`;
+            }
+            const folderInput = document.getElementById('newFolderImage');
+            if (folderInput) {
+                folderInput.value = url;
+            }
+            showToast("Đã trích xuất ảnh từ lịch sử!");
+        }
+
+        window.addImageUrlToHistory = async function(url) {
+            if (!url || typeof url !== 'string' || url.trim() === '') return;
+            url = url.trim();
+            if (!currentSettings.recentImages) currentSettings.recentImages = [];
+            
+            currentSettings.recentImages = currentSettings.recentImages.filter(u => u !== url);
+            currentSettings.recentImages.unshift(url);
+            
+            if (currentSettings.recentImages.length > 10) {
+                currentSettings.recentImages = currentSettings.recentImages.slice(0, 10);
+            }
+            
+            renderImageHistory(); 
+            try {
+                await setDoc(doc(db, "user_settings", currentUser.uid), { recentImages: currentSettings.recentImages }, { merge: true });
+            } catch(e) {}
+        }
+
+        async function loadUserSettings() {
+            try {
+                const docRef = doc(db, "user_settings", currentUser.uid);
+                const docSnap = await getDoc(docRef);
+                if(docSnap.exists()) {
+                    currentSettings = { ...currentSettings, ...docSnap.data() };
+                }
+            } catch (error) {
+                console.warn("Không thể tải cài đặt cá nhân, dùng mặc định.", error);
+            }
+            applySettingsToUI();
+        }
+
+        function applySettingsToUI() {
+            document.title = currentSettings.appTitle || "My Notebook";
+            const titles = document.querySelectorAll('.app-title-display');
+            titles.forEach(t => t.innerText = document.title);
+
+            if(currentSettings.bgUrl) {
+                document.body.style.backgroundImage = `url('${currentSettings.bgUrl}')`;
+            } else {
+                document.body.style.backgroundImage = `url('1.jpg')`;
+            }
+
+            document.documentElement.style.setProperty('--text-color', currentSettings.textColor);
+            document.documentElement.style.setProperty('--accent-color', currentSettings.btnColor);
+            
+            document.getElementById('settingAppTitle').value = currentSettings.appTitle !== "My Notebook" ? currentSettings.appTitle : "";
+            document.getElementById('settingBgUrl').value = currentSettings.bgUrl;
+            document.getElementById('settingTextColor').value = currentSettings.textColor;
+            document.getElementById('settingBtnColor').value = currentSettings.btnColor;
+            
+            document.getElementById('settingBtnTheme').value = currentSettings.btnTheme || "default";
+            document.body.dataset.btnTheme = currentSettings.btnTheme || "default";
+
+            const font = currentSettings.fontFamily || "Borel";
+            document.getElementById('settingFontFamily').value = font;
+            
+            document.documentElement.style.setProperty('--handwriting-font', "'" + font + "', cursive");
+            
+            document.body.dataset.font = font;
+            renderImageHistory();
+            
+            /* Áp dụng cỡ chữ nội dung & cỡ chữ nút */
+            document.documentElement.style.setProperty('--editor-fs', (currentSettings.fontSize || "30") + 'px');
+            document.getElementById('fontSizeSlider').value = currentSettings.fontSize || "30";
+
+            document.documentElement.style.setProperty('--btn-fs', (currentSettings.btnFontSize || "18") + 'px');
+            document.getElementById('btnFontSizeSlider').value = currentSettings.btnFontSize || "18";
+        }
+
+        window.saveUserSettings = async function() {
+            const title = document.getElementById('settingAppTitle').value.trim() || "My Notebook";
+            const bg = document.getElementById('settingBgUrl').value.trim();
+            const txtColor = document.getElementById('settingTextColor').value;
+            const btnColor = document.getElementById('settingBtnColor').value;
+            const btnTheme = document.getElementById('settingBtnTheme').value;
+            const fontFamily = document.getElementById('settingFontFamily').value;
+            const fontSize = document.getElementById('fontSizeSlider').value;
+            const btnFontSize = document.getElementById('btnFontSizeSlider').value;
+
+            currentSettings = { ...currentSettings, appTitle: title, bgUrl: bg, textColor: txtColor, btnColor: btnColor, btnTheme: btnTheme, fontFamily: fontFamily, fontSize: fontSize, btnFontSize: btnFontSize };
+            try {
+                await setDoc(doc(db, "user_settings", currentUser.uid), currentSettings);
+                applySettingsToUI();
+                if (bg) await addImageUrlToHistory(bg);
+                showToast("Đã lưu giao diện!");
+            } catch(e) {
+                showToast("Lỗi khi lưu cài đặt!");
+            }
+        }
+
         // --- CỐT LÕI TẢI DỮ LIỆU ---
         async function loadCoreData() {
             if (!currentUser) return;
-            
-            const qTabs = query(tabsCollection, where("userId", "==", currentUser.uid));
-            const tabSnap = await getDocs(qTabs);
-            allTabs = [];
-            tabSnap.forEach(doc => allTabs.push({ id: doc.id, ...doc.data() }));
-            allTabs.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+            try {
+                await loadUserSettings(); 
 
-            if (allTabs.length === 0) {
-                const newTabRef = await addDoc(tabsCollection, { userId: currentUser.uid, name: "Chung", createdAt: new Date().toISOString() });
-                allTabs.push({ id: newTabRef.id, name: "Chung" });
+                const qTabs = query(tabsCollection, where("userId", "==", currentUser.uid));
+                const tabSnap = await getDocs(qTabs);
+                allTabs = [];
+                tabSnap.forEach(doc => allTabs.push({ id: doc.id, ...doc.data() }));
+                allTabs.sort((a, b) => (new Date(a.createdAt || 0).getTime()) - (new Date(b.createdAt || 0).getTime()));
+
+                if (allTabs.length === 0) {
+                    const newTabRef = await addDoc(tabsCollection, { userId: currentUser.uid, name: "Chung", createdAt: new Date().toISOString() });
+                    allTabs.push({ id: newTabRef.id, name: "Chung" });
+                }
+                if (!currentTabId || !allTabs.find(t => t.id === currentTabId)) { currentTabId = allTabs[0].id; }
+
+                const qFolders = query(foldersCollection, where("userId", "==", currentUser.uid));
+                const folderSnap = await getDocs(qFolders);
+                allFolders = [];
+                folderSnap.forEach(doc => allFolders.push({ id: doc.id, ...doc.data() }));
+                allFolders.sort((a, b) => (new Date(a.createdAt || 0).getTime()) - (new Date(b.createdAt || 0).getTime()));
+
+                renderTabs();
+                renderFolderSelect();
+                renderSidebarSettings();
+                await loadEntries();
+            } catch (error) {
+                console.error("Lỗi khi tải Core Data:", error);
+                showToast("Có lỗi khi tải dữ liệu! Vui lòng tải lại trang.");
             }
-            if (!currentTabId || !allTabs.find(t => t.id === currentTabId)) { currentTabId = allTabs[0].id; }
-
-            const qFolders = query(foldersCollection, where("userId", "==", currentUser.uid));
-            const folderSnap = await getDocs(qFolders);
-            allFolders = [];
-            folderSnap.forEach(doc => allFolders.push({ id: doc.id, ...doc.data() }));
-            allFolders.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-
-            renderTabs();
-            renderFolderSelect();
-            renderSidebarSettings();
-            await loadEntries();
         }
 
         function renderSidebarSettings() {
@@ -566,7 +985,6 @@
             }
         }
 
-        // TÍNH NĂNG ĐẾM BÀI VIẾT KHI XÓA TAB
         window.deleteTab = async function(id) {
             if(allTabs.length <= 1) return alert("Không thể xóa Tab cuối cùng!");
             const count = allDiariesGlobal.filter(e => e.tabId === id || (!e.tabId && allTabs[0].id === id)).length;
@@ -589,6 +1007,8 @@
             });
             document.getElementById('newFolderName').value = "";
             document.getElementById('newFolderImage').value = "";
+            if(imageUrl) addImageUrlToHistory(imageUrl);
+
             showToast("Đã tạo Thư mục mới!");
             await loadCoreData();
             const selectEl = document.getElementById('folderSelect');
@@ -600,16 +1020,20 @@
             const newName = prompt("Nhập tên mới cho Thư mục:", folder.name);
             if(newName && newName.trim() !== "") {
                 const newImg = prompt("Nhập link ảnh bìa mới (để trống nếu muốn xóa ảnh):", folder.image || "");
-                await updateDoc(doc(db, "notebook_folders", id), { name: newName.trim(), image: newImg !== null ? newImg.trim() : folder.image });
+                const finalImg = newImg !== null ? newImg.trim() : folder.image;
+                
+                await updateDoc(doc(db, "notebook_folders", id), { name: newName.trim(), image: finalImg });
+                
+                if(newImg !== null && newImg.trim() !== "") addImageUrlToHistory(newImg.trim());
+
                 showToast("Đã cập nhật Thư mục!");
                 await loadCoreData();
             }
         }
 
-        // TÍNH NĂNG ĐẾM BÀI VIẾT KHI XÓA FOLDER
         window.deleteFolder = async function(id) {
             const count = allDiariesGlobal.filter(e => e.folderId === id).length;
-            if(confirm(`Hiện tại thư mục này có ${count} bài viết. Bạn chắc chắn muốn xóa?`)) {
+            if(confirm(`Hiện tại thư mục này có ${count} bài viết. Các bài viết bên trong sẽ được giữ lại ở mục Chưa phân thư mục. Bạn chắc chắn muốn xóa?`)) {
                 await deleteDoc(doc(db, "notebook_folders", id));
                 showToast("Đã xóa Thư mục!");
                 if(currentFolderViewId === id) closeFolderView();
@@ -628,10 +1052,10 @@
                 btn.className = `btn cube inline ${activeClass}`;
                 btn.onclick = () => switchTab(tab.id);
                 btn.innerHTML = `
-                    <span class="bg-top" style="background:#d4af37;"><span class="bg-inner"></span></span>
-                    <span class="bg-right" style="background:#d4af37;"><span class="bg-inner"></span></span>
-                    <span class="bg" style="background:#d4af37;"><span class="bg-inner"></span></span>
-                    <span class="text" style="color: #d4af37; padding: 0px 5px;">${tab.name}</span>
+                    <span class="bg-top" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                    <span class="bg-right" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                    <span class="bg" style="background:var(--accent-color);"><span class="bg-inner"></span></span>
+                    <span class="text" style="color: var(--accent-color); padding: 0px 5px;">${tab.name}</span>
                 `;
                 container.appendChild(btn);
             });
@@ -671,8 +1095,6 @@
                 sidebar.classList.remove('open');
             }
         });
-        document.getElementById('darkModeToggle').addEventListener('change', (e) => e.target.checked ? document.body.classList.add('dark-mode') : document.body.classList.remove('dark-mode'));
-        document.getElementById('fontSizeSlider').addEventListener('input', (e) => document.documentElement.style.setProperty('--editor-fs', e.target.value + 'px'));
 
         let savedRange = null;
         ['keyup', 'mouseup', 'mouseleave'].forEach(event => {
@@ -695,11 +1117,15 @@
         window.insertTab = function() { document.execCommand('insertHTML', false, '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'); editor.focus(); };
         editor.addEventListener('keydown', function(e) { if (e.key === 'Tab') { e.preventDefault(); insertTab(); } });
         function showToast(message) { const toast = document.getElementById('toast'); toast.textContent = message; toast.className = "show"; setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000); }
-        function formatDate(dateString) { return new Date(dateString).toLocaleDateString('vi-VN', { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }); }
+        
+        function formatDate(dateString) { 
+            if(!dateString) return "";
+            return new Date(dateString).toLocaleDateString('vi-VN', { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }); 
+        }
 
         // --- XỬ LÝ NHẬT KÝ & HIỂN THỊ BẢNG ---
         function buildTableHTML(entries) {
-            if(entries.length === 0) return `<div style="text-align:center; padding:20px; color:var(--light-text); font-style:italic;">Trống.</div>`;
+            if(entries.length === 0) return ``;
             
             let html = `<table class="entry-table">
                 <thead>
@@ -743,9 +1169,8 @@
 
                 let allEntries = [];
                 querySnapshot.forEach((docSnap) => { allEntries.push({ id: docSnap.id, ...docSnap.data() }); });
-                allEntries.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                allEntries.sort((a, b) => (new Date(b.createdAt || 0).getTime()) - (new Date(a.createdAt || 0).getTime()));
                 
-                // Lưu biến toàn cục để phục vụ cho tính năng Đếm bài viết khi Xóa
                 allDiariesGlobal = allEntries; 
 
                 const looseEntries = [];
@@ -765,20 +1190,19 @@
                     const eTabId = data.tabId || (allTabs.length > 0 ? allTabs[0].id : null);
                     if (eTabId !== currentTabId) return; 
 
-                    activeEntriesData[docId] = { title: data.title, content: data.content, folderId: data.folderId || "" }; 
+                    activeEntriesData[docId] = { title: data.title, content: data.content, folderId: data.folderId || "", createdAtISO: data.createdAt }; 
                     const entryObj = { id: docId, title: displayTitle, dateStr, content: data.content, wCount, folderId: data.folderId };
                     
                     globalParsedEntries.push(entryObj);
 
                     if (data.folderId && tabFolders.find(f => f.id === data.folderId)) {
-                        // Nằm trong thư mục hợp lệ của tab này
+                        // Trong folder
                     } else {
                         looseEntries.push(entryObj);
                     }
 
-                    // Lịch sử Sidebar
                     const li = document.createElement('li'); li.className = 'history-item';
-                    li.innerHTML = `<a href="#" onclick="editEntry('${docId}'); document.getElementById('sidebar').classList.remove('open')">
+                    li.innerHTML = `<a href="#" onclick="editEntry('${docId}')">
                                         <div class="history-title">${displayTitle}</div>
                                         <div class="history-date">${dateStr}</div></a>`;
                     sidebarHistoryList.appendChild(li);
@@ -792,7 +1216,7 @@
                 folderGridEl.innerHTML = '';
                 if(tabFolders.length > 0) {
                     tabFolders.forEach(f => {
-                        const bgStyle = f.image ? `background-image: url('${f.image}');` : `background: linear-gradient(135deg, #d4af37, #b58900);`;
+                        const bgStyle = f.image ? `background-image: url('${f.image}');` : `background: var(--accent-color);`;
                         folderGridEl.innerHTML += `
                             <div class="folder-box" onclick="openFolderView('${f.id}')">
                                 <div class="folder-img" style="${bgStyle}"></div>
@@ -804,20 +1228,26 @@
                     folderGridEl.innerHTML = '<div style="color:var(--light-text); width:100%; text-align:center; font-style:italic;">Bạn chưa tạo thư mục nào.</div>';
                 }
 
-                // Render Bài viết rời
-                looseEntriesTableEl.innerHTML = buildTableHTML(looseEntries);
+                // --- TÍNH NĂNG TỰ ĐỘNG ẨN HIỆN "CHƯA PHÂN THƯ MỤC" ---
+                const looseSectionEl = document.getElementById('looseEntriesSection');
+                if (looseEntries.length > 0) {
+                    looseSectionEl.style.display = 'block';
+                    looseEntriesTableEl.innerHTML = buildTableHTML(looseEntries);
+                } else {
+                    looseSectionEl.style.display = 'none';
+                    looseEntriesTableEl.innerHTML = '';
+                }
 
-                // Cập nhật lại giao diện bảng Folder đang mở (nếu có)
                 if(currentFolderViewId) {
                     openFolderView(currentFolderViewId);
                 }
 
-            } catch (error) { console.error(error); }
+            } catch (error) { console.error("Lỗi khi tải bài viết:", error); }
         }
 
         // --- HÀM QUẢN LÝ VIEW ---
         window.openFolderView = function(folderId) {
-            currentFolderViewId = folderId; // Lưu trạng thái
+            currentFolderViewId = folderId;
             const folder = allFolders.find(f => f.id === folderId);
             if(!folder) return;
 
@@ -829,28 +1259,31 @@
             const entriesInFolder = globalParsedEntries.filter(e => e.folderId === folderId);
             document.getElementById('folderEntriesTable').innerHTML = buildTableHTML(entriesInFolder);
             
-            // Cuộn lên đầu
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         window.closeFolderView = function() {
-            currentFolderViewId = null; // Xóa trạng thái
+            currentFolderViewId = null; 
             document.getElementById('folderDetailView').style.display = 'none';
             document.getElementById('editorView').style.display = 'none';
             document.getElementById('mainBlogView').style.display = 'block';
         }
 
-        // --- HÀM QUẢN LÝ TRÌNH SOẠN THẢO (EDITOR) FULL VIEW ---
+        // --- HÀM QUẢN LÝ TRÌNH SOẠN THẢO (EDITOR) TRÊN NỀN ---
         window.openEditor = function() {
             document.getElementById('sidebar').classList.remove('open');
             currentEditingId = null;
             document.getElementById('entryTitle').value = "";
             editor.innerHTML = "";
-            document.getElementById('folderSelect').value = currentFolderViewId || ""; // Auto gán thư mục nếu đang mở
+            document.getElementById('folderSelect').value = currentFolderViewId || ""; 
             document.getElementById('liveWordCount').innerText = "0 chữ";
             document.querySelector('#saveBtn .text').textContent = "Lưu trang mới";
             
-            // Ẩn tất cả và mở Editor
+            // Set input date về hiện tại
+            const now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            document.getElementById('entryDate').value = now.toISOString().slice(0,16);
+
             document.getElementById('mainBlogView').style.display = 'none';
             document.getElementById('folderDetailView').style.display = 'none';
             document.getElementById('editorView').style.display = 'block';
@@ -862,16 +1295,12 @@
         window.closeEditor = function() {
             currentEditingId = null;
             document.getElementById('editorView').style.display = 'none';
-            // Dựa vào lịch sử để quay lại đúng chỗ
-            if (currentFolderViewId) {
-                openFolderView(currentFolderViewId);
-            } else {
-                document.getElementById('mainBlogView').style.display = 'block';
-            }
+            if (currentFolderViewId) { openFolderView(currentFolderViewId); } 
+            else { document.getElementById('mainBlogView').style.display = 'block'; }
         }
 
         window.editEntry = function(docId) {
-            document.getElementById('sidebar').classList.remove('open'); // Đóng menu nếu đang mở
+            document.getElementById('sidebar').classList.remove('open'); 
             const entry = activeEntriesData[docId];
             if(!entry) return;
 
@@ -880,17 +1309,28 @@
             document.getElementById('folderSelect').value = entry.folderId;
             document.getElementById('liveWordCount').innerText = countWords(entry.content) + " chữ";
             
+            // Đặt ngày giờ theo bài viết cũ
+            if(entry.createdAtISO) {
+                const entryDate = new Date(entry.createdAtISO);
+                if(!isNaN(entryDate.getTime())) {
+                    entryDate.setMinutes(entryDate.getMinutes() - entryDate.getTimezoneOffset());
+                    document.getElementById('entryDate').value = entryDate.toISOString().slice(0,16);
+                } else {
+                    const now = new Date();
+                    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                    document.getElementById('entryDate').value = now.toISOString().slice(0,16);
+                }
+            }
+
             currentEditingId = docId;
             document.querySelector('#saveBtn .text').textContent = "Cập nhật bài viết";
             
-            // Ẩn tất cả và mở Editor
             document.getElementById('mainBlogView').style.display = 'none';
             document.getElementById('folderDetailView').style.display = 'none';
             document.getElementById('editorView').style.display = 'block';
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
             
-            // Đặt con trỏ vào cuối
             setTimeout(() => {
                 editor.focus();
                 if (typeof window.getSelection !== "undefined" && typeof document.createRange !== "undefined") {
@@ -911,6 +1351,10 @@
 
             const wordCount = countWords(content);
             const folderId = document.getElementById('folderSelect').value;
+            
+            // Xử lý Ngày Giờ
+            const selectedDate = document.getElementById('entryDate').value;
+            const finalIsoDate = selectedDate ? new Date(selectedDate).toISOString() : new Date().toISOString();
 
             document.getElementById('saveBtn').style.pointerEvents = "none";
             document.querySelector('#saveBtn .text').textContent = "Đang lưu...";
@@ -918,12 +1362,12 @@
             try {
                 if (currentEditingId) {
                     await updateDoc(doc(db, "diaries", currentEditingId), {
-                        title: title, content: content, folderId: folderId, wordCount: wordCount
+                        title: title, content: content, folderId: folderId, wordCount: wordCount, createdAt: finalIsoDate
                     });
                     showToast("Đã cập nhật bài viết!");
                 } else {
                     await addDoc(diaryCollection, {
-                        userId: currentUser.uid, tabId: currentTabId, folderId: folderId, title: title, content: content, wordCount: wordCount, status: 'active', createdAt: new Date().toISOString()
+                        userId: currentUser.uid, tabId: currentTabId, folderId: folderId, title: title, content: content, wordCount: wordCount, status: 'active', createdAt: finalIsoDate
                     });
                     showToast("Đã lưu trang mới!");
                 }
